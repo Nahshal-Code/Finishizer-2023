@@ -829,7 +829,10 @@ class Clients extends AdminController
 
         if ($this->input->is_ajax_request()) {
             $data = $this->input->post();
+<<<<<<< HEAD
             $data['branch_id'] = $this->session->userdata('selectedbranch_id'); 
+=======
+>>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
             if ($data['id'] == '') {
                 $id      = $this->clients_model->add_group($data);
                 $message = $id ? _l('added_successfully', _l('customer_group')) : '';

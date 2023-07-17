@@ -95,7 +95,11 @@ class Leads extends AdminController
                 $emailOriginal   = $this->db->select('email')->where('id', $id)->get(db_prefix() . 'leads')->row()->email;
                 $proposalWarning = false;
                 $message         = '';
+<<<<<<< HEAD
                 $success         = $this->leads_model->update($data, $id);
+=======
+                $success         = $this->leads_model->update($this->input->post(), $id);
+>>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
 
                 if ($success) {
                     $emailNow = $this->db->select('email')->where('id', $id)->get(db_prefix() . 'leads')->row()->email;

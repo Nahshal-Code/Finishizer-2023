@@ -115,7 +115,6 @@
                     </li>
                     <?php } ?>
                 </ul>
-
                 <div class="mobile-navbar collapse" id="mobile-collapse" aria-expanded="false" style="height: 0px;"
                     role="navigation">
                     <ul class="nav navbar-nav">

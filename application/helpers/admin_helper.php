@@ -31,7 +31,6 @@ function app_admin_footer()
  */
 function init_head($aside = true)
 {
-
     $CI = &get_instance();
     $CI->load->view('admin/includes/head');
     $CI->load->view('admin/includes/header', ['startedTimers' => $CI->misc_model->get_staff_started_timers()]);
@@ -116,7 +115,6 @@ function staff_can($capability, $feature = null, $staff_id = '')
      * If user is admin return true
      * Admins have all permissions
      */
-
     if (is_admin($staff_id)) {
         return true;
     }

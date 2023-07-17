@@ -519,7 +519,11 @@ class Staff_model extends App_Model
 
         if (is_admin()) {
             if (isset($data['administrator'])) {
+<<<<<<< HEAD
                 $data['admin'] = 2;
+=======
+                $data['admin'] = 1;
+>>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
                 unset($data['administrator']);
             } else {
                 if ($id != get_staff_user_id()) {
