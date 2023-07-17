@@ -13,5 +13,9 @@ class Migration_Version_306 extends CI_Migration
         if (!$this->db->field_exists('branch_id', db_prefix() . 'staff')) {
             $this->db->query('ALTER TABLE `' . db_prefix() . 'staff` ADD `branch_id` INT NULL DEFAULT NULL AFTER `staff_id`;');
         }
+
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'web_to_lead')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'web_to_lead` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
     }
 }

@@ -752,6 +752,7 @@ class Leads extends AdminController
         if ($this->input->post()) {
             if ($id == '') {
                 $data = $this->input->post();
+                $data['branch_id']=$this->session->userdata('selectedbranch_id');
                 $id   = $this->leads_model->add_form($data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('web_to_lead_form')));
@@ -1162,7 +1163,7 @@ class Leads extends AdminController
         }
         if ($this->input->post()) {
             $data             = $this->input->post();
-            $data['branch_id']=$this->session->userdata('selectedbranch_id'); 
+            //$data['branch_id']=$this->session->userdata('selectedbranch_id'); 
             $data['password'] = $this->input->post('password', false);
 
             if (isset($data['fakeusernameremembered'])) {
