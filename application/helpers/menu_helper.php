@@ -35,12 +35,8 @@ function app_init_admin_sidebar_menu_items()
         'badge'    => [],
     ]);
 
-<<<<<<< HEAD
     if (
         (has_permission('proposals', '', 'view') || has_permission('proposals', '', 'view_own'))
-=======
-    if ((has_permission('proposals', '', 'view') || has_permission('proposals', '', 'view_own'))
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
         || (staff_has_assigned_proposals() && get_option('allow_staff_view_proposals_assigned') == 1)
     ) {
         $CI->app_menu->add_sidebar_children_item('sales', [
@@ -52,12 +48,8 @@ function app_init_admin_sidebar_menu_items()
         ]);
     }
 
-<<<<<<< HEAD
     if (
     (has_permission('estimates', '', 'view') || has_permission('estimates', '', 'view_own'))
-=======
-    if ((has_permission('estimates', '', 'view') || has_permission('estimates', '', 'view_own'))
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
         || (staff_has_assigned_estimates() && get_option('allow_staff_view_estimates_assigned') == 1)
     ) {
         $CI->app_menu->add_sidebar_children_item('sales', [
@@ -69,12 +61,8 @@ function app_init_admin_sidebar_menu_items()
         ]);
     }
 
-<<<<<<< HEAD
     if (
     (has_permission('invoices', '', 'view') || has_permission('invoices', '', 'view_own'))
-=======
-    if ((has_permission('invoices', '', 'view') || has_permission('invoices', '', 'view_own'))
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
         || (staff_has_assigned_invoices() && get_option('allow_staff_view_invoices_assigned') == 1)
     ) {
         $CI->app_menu->add_sidebar_children_item('sales', [
@@ -99,12 +87,8 @@ function app_init_admin_sidebar_menu_items()
         ]);
     }
 
-<<<<<<< HEAD
     if (
         has_permission('credit_notes', '', 'view') || has_permission('credit_notes', '', 'view_own')) {
-=======
-    if (has_permission('credit_notes', '', 'view') || has_permission('credit_notes', '', 'view_own')) {
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
         $CI->app_menu->add_sidebar_children_item('sales', [
             'slug'     => 'credit_notes',
             'name'     => _l('credit_notes'),
@@ -265,7 +249,6 @@ function app_init_admin_sidebar_menu_items()
         'badge'    => [],
     ]);
 
-<<<<<<< HEAD
     if(is_admin()){
         $CI->app_menu->add_sidebar_menu_item('branches', [
             'name'     => _l('branches'),
@@ -275,8 +258,6 @@ function app_init_admin_sidebar_menu_items()
             'badge'    => [],
         ]);
     }
-=======
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
 
     if (is_admin()) {
         $CI->app_menu->add_sidebar_children_item('utilities', [
