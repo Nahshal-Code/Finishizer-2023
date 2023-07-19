@@ -230,6 +230,7 @@ CREATE TABLE `tblcontracts` (
 
 CREATE TABLE `tblcontracts_types` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` mediumtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -628,6 +629,7 @@ CREATE TABLE `tblcredits` (
 
 CREATE TABLE `tblcurrencies` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `symbol` varchar(10) NOT NULL,
   `name` varchar(100) NOT NULL,
   `decimal_separator` varchar(5) DEFAULT NULL,
@@ -728,6 +730,7 @@ CREATE TABLE `tblcustomfieldsvalues` (
 
 CREATE TABLE `tbldepartments` (
   `departmentid` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `imap_username` varchar(191) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
@@ -952,6 +955,7 @@ CREATE TABLE `tblestimate_requests` (
 
 CREATE TABLE `tblestimate_request_forms` (
   `id` int UNSIGNED NOT NULL,
+  `branch_id` int NOT NULL,
   `form_key` varchar(32) NOT NULL,
   `type` varchar(100) NOT NULL,
   `name` varchar(191) NOT NULL,
@@ -980,6 +984,7 @@ CREATE TABLE `tblestimate_request_forms` (
 
 CREATE TABLE `tblestimate_request_status` (
   `id` int UNSIGNED NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `statusorder` int DEFAULT NULL,
   `color` varchar(10) DEFAULT NULL,
@@ -1059,6 +1064,7 @@ CREATE TABLE `tblexpenses` (
 
 CREATE TABLE `tblexpenses_categories` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(191) NOT NULL,
   `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -1438,6 +1444,7 @@ INSERT INTO `tblleads_email_integration` (`id`, `active`, `email`, `imap_server`
 
 CREATE TABLE `tblleads_sources` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -1457,6 +1464,7 @@ INSERT INTO `tblleads_sources` (`id`, `name`) VALUES
 
 CREATE TABLE `tblleads_status` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `statusorder` int DEFAULT NULL,
   `color` varchar(10) DEFAULT '#28B8DA',
@@ -2040,6 +2048,7 @@ CREATE TABLE `tblpayment_attempts` (
 
 CREATE TABLE `tblpayment_modes` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `description` text,
   `show_on_pdf` int NOT NULL DEFAULT '0',
@@ -2372,6 +2381,7 @@ CREATE TABLE `tblscheduled_emails` (
 
 CREATE TABLE `tblservices` (
   `serviceid` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -2407,6 +2417,7 @@ CREATE TABLE `tblshared_customer_files` (
 
 CREATE TABLE `tblspam_filters` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `type` varchar(40) NOT NULL,
   `rel_type` varchar(10) NOT NULL,
   `value` text NOT NULL
@@ -2420,6 +2431,7 @@ CREATE TABLE `tblspam_filters` (
 
 CREATE TABLE `tblstaff` (
   `staffid` int NOT NULL,
+  `branch_id` int NOT NULL,
   `email` varchar(100) NOT NULL,
   `firstname` varchar(50) NOT NULL,
   `lastname` varchar(50) NOT NULL,
@@ -2668,6 +2680,7 @@ CREATE TABLE `tbltask_followers` (
 
 CREATE TABLE `tbltaxes` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(100) NOT NULL,
   `taxrate` decimal(15,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -2743,6 +2756,7 @@ CREATE TABLE `tbltickets_pipe_log` (
 
 CREATE TABLE `tbltickets_predefined_replies` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(191) NOT NULL,
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -2755,6 +2769,7 @@ CREATE TABLE `tbltickets_predefined_replies` (
 
 CREATE TABLE `tbltickets_priorities` (
   `priorityid` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
@@ -2775,6 +2790,7 @@ INSERT INTO `tbltickets_priorities` (`priorityid`, `name`) VALUES
 
 CREATE TABLE `tbltickets_status` (
   `ticketstatusid` int NOT NULL,
+  `branch_id` int NOT NULL,
   `name` varchar(50) NOT NULL,
   `isdefault` int NOT NULL DEFAULT '0',
   `statuscolor` varchar(7) DEFAULT NULL,
@@ -2950,6 +2966,7 @@ CREATE TABLE `tblviews_tracking` (
 
 CREATE TABLE `tblweb_to_lead` (
   `id` int NOT NULL,
+  `branch_id` int NOT NULL,
   `form_key` varchar(32) NOT NULL,
   `lead_source` int NOT NULL,
   `lead_status` int NOT NULL,

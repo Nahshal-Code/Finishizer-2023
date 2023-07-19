@@ -2,7 +2,7 @@
 
 error_reporting(E_ALL ^ E_NOTICE ^ E_DEPRECATED);
 
-@ini_set('max_execution_time', 240);
+@ini_set('max_execution_time', 300);
 define('FOPEN_WRITE_CREATE_DESTRUCTIVE', 'wb');
 define('FILE_READ_MODE', 0644);
 define('FILE_WRITE_MODE', 0666);
