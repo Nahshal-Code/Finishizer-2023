@@ -44,7 +44,8 @@ class Authentication_model extends App_Model
                     // Password failed, return
                     return false;
                 }
-            } else {
+            } 
+            else {
                 hooks()->do_action('non_existent_user_login_attempt', [
                     'email'           => $email,
                     'is_staff_member' => $staff,
@@ -80,6 +81,7 @@ class Authentication_model extends App_Model
                     $user_data = [
                         'staff_user_id'   => $user->$_id,
                         'staff_logged_in' => true,
+                        'staff_category' => $user->admin,
                     ];
                 } else {
                     $user_data                = [];
@@ -88,7 +90,8 @@ class Authentication_model extends App_Model
                         $user_data['tfa_remember'] = true;
                     }
                 }
-            } else {
+            } 
+            else {
                 hooks()->do_action('before_client_login', [
                     'email'           => $email,
                     'userid'          => $user->userid,
