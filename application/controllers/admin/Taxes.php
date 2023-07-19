@@ -28,6 +28,7 @@ class Taxes extends AdminController
     {
         if ($this->input->post()) {
             $data = $this->input->post();
+            $data['branch_id']=$this->session->userdata('selectedbranch_id');
             if ($data['taxid'] == '') {
                 $success = $this->taxes_model->add($data);
                 $message = '';

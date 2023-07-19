@@ -54,6 +54,17 @@ CREATE TABLE `tblannouncements` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tblbranches`
+--
+
+CREATE TABLE `tblbranches` (
+  `branch_id` int NOT NULL,
+  `branch_name` varchar(191) NOT NULL,
+  `branch_location` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+
+
+--
 -- Table structure for table `tblclients`
 --
 
