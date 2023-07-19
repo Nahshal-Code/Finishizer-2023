@@ -46,5 +46,23 @@ class Migration_Version_306 extends CI_Migration
         if (!$this->db->field_exists('branch_id', db_prefix() . 'taxes')) {
             $this->db->query('ALTER TABLE `' . db_prefix() . 'taxes` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
         }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'currencies')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'currencies` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'payment_modes')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'payment_modes` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'expenses_categories')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'expenses_categories` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'contracts_types')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'contracts_types` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'estimate_request_forms')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'estimate_request_forms` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'estimate_request_status')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'estimate_request_status` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
     }
 }

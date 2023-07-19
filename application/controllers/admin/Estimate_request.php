@@ -223,6 +223,7 @@ class Estimate_request extends AdminController
         }
         if ($this->input->post()) {
             $data = $this->input->post();
+            $data['branch_id']=$this->session->userdata('selectedbranch_id');
             if (!$this->input->post('id')) {
                 $inline = isset($data['inline']);
                 if (isset($data['inline'])) {
@@ -356,6 +357,7 @@ class Estimate_request extends AdminController
         if ($this->input->post()) {
             if ($id == '') {
                 $data = $this->input->post();
+                $data['branch_id']=$this->session->userdata('selectedbranch_id');
                 $id   = $this->estimate_request_model->add_form($data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('estimate_request_form')));

@@ -28,6 +28,7 @@ class Paymentmodes extends AdminController
     {
         if ($this->input->post()) {
             $data = $this->input->post();
+            $data['branch_id']=$this->session->userdata('selectedbranch_id');
             if ($data['paymentmodeid'] == '') {
                 $message = '';
                 $success = $this->payment_modes_model->add($data);

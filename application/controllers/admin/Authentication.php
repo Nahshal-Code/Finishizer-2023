@@ -86,7 +86,7 @@ class Authentication extends App_Controller
                 maybe_redirect_to_previous_url();
 
                 hooks()->do_action('after_staff_login');
-                if($this->session->userdata('staff_category')==='1'){
+                if(is_admin()){
                     redirect('branches');
                 }
                 else{

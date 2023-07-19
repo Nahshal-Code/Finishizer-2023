@@ -353,7 +353,9 @@ class Contracts extends AdminController
         }
         if ($this->input->post()) {
             if (!$this->input->post('id')) {
-                $id = $this->contracts_model->add_contract_type($this->input->post());
+                $data = $this->input->post();
+                $data['branch_id']=$this->session->userdata('selectedbranch_id');
+                $id = $this->contracts_model->add_contract_type($data);
                 if ($id) {
                     $success = true;
                     $message = _l('added_successfully', _l('contract_type'));

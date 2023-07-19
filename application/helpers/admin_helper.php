@@ -278,6 +278,7 @@ function is_admin($staffid = '')
     $result = $CI->db->count_all_results(db_prefix() . 'staff') > 0 ? true : false;
     $CI->app_object_cache->add('is-admin-' . $staffid, $result ? 'yes' : 'no');
 
+    
     return is_admin($staffid);
 }
 

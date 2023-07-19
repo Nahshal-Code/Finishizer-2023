@@ -28,6 +28,7 @@ class Currencies extends AdminController
     {
         if ($this->input->post()) {
             $data = $this->input->post();
+            $data['branch_id']=$this->session->userdata('selectedbranch_id');
             if ($data['currencyid'] == '') {
                 $success = $this->currencies_model->add($data);
                 $message = '';
