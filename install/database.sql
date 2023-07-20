@@ -3011,6 +3011,12 @@ ALTER TABLE `tblannouncements`
   ADD PRIMARY KEY (`announcementid`);
 
 --
+-- Indexes for table `tblbranches`
+--
+ALTER TABLE `tblbranches`
+  ADD PRIMARY KEY (`branch_id`);
+
+--
 -- Indexes for table `tblclients`
 --
 ALTER TABLE `tblclients`
@@ -3789,6 +3795,12 @@ ALTER TABLE `tblactivity_log`
 --
 ALTER TABLE `tblannouncements`
   MODIFY `announcementid` int NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `tblbranches`
+--
+ALTER TABLE `tblbranches`
+  MODIFY `branch_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tblclients`
