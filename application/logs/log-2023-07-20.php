@@ -341,3 +341,5 @@ ERROR - 2023-07-20 00:45:13 --> Severity: Notice --> Trying to get property 'rol
 ERROR - 2023-07-20 00:45:13 --> Severity: Notice --> Trying to get property 'permissions' of non-object C:\xampp\htdocs\finishizer_erp3.0.5\application\helpers\admin_helper.php 181
 ERROR - 2023-07-20 00:45:13 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\finishizer_erp3.0.5\application\helpers\admin_helper.php 183
 ERROR - 2023-07-20 00:45:21 --> Could not find the language line "features"
+ERROR - 2023-07-20 17:37:24 --> 404 Page Not Found: Migration/index
+ERROR - 2023-07-20 17:38:10 --> Not Found: /index
