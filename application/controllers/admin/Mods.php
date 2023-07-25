@@ -25,7 +25,8 @@ class Mods extends AdminController
 
     public function activate($name)
     {
-        $this->app_modules->activate($name);
+        $b_id = $this->session->userdata('selectedbranch_id');
+        $this->app_modules->activate($name,$b_id);
         $this->to_modules();
     }
 

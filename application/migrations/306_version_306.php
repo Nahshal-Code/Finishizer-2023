@@ -13,6 +13,9 @@ class Migration_Version_306 extends CI_Migration
         if (!$this->db->field_exists('branch_id', db_prefix() . 'staff')) {
             $this->db->query('ALTER TABLE `' . db_prefix() . 'staff` ADD `branch_id` INT NULL DEFAULT NULL AFTER `staff_id`;');
         }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'customers_groups')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'customers_groups` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
         if (!$this->db->field_exists('branch_id', db_prefix() . 'departments')) {
             $this->db->query('ALTER TABLE `' . db_prefix() . 'departments` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
         }
@@ -63,6 +66,9 @@ class Migration_Version_306 extends CI_Migration
         }
         if (!$this->db->field_exists('branch_id', db_prefix() . 'estimate_request_status')) {
             $this->db->query('ALTER TABLE `' . db_prefix() . 'estimate_request_status` ADD `branch_id` INT NULL DEFAULT NULL AFTER `id`;');
+        }
+        if (!$this->db->field_exists('branch_id', db_prefix() . 'tblknowledge_base_groups')) {
+            $this->db->query('ALTER TABLE `' . db_prefix() . 'tblknowledge_base_groups` ADD `branch_id` INT NULL DEFAULT NULL AFTER `groupid `;');
         }
     }
 }

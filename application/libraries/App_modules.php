@@ -61,7 +61,7 @@ class App_modules
      * @param  string $name Module Name [system_name]
      * @return boolean
      */
-    public function activate($name)
+    public function activate($name,$b_id)
     {
         $module = $this->get($name);
 
@@ -74,8 +74,9 @@ class App_modules
          */
 
         if (!$this->module_exists_in_database($name)) {
+            
             $this->ci->db->where('module_name', $name);
-            $this->ci->db->insert(db_prefix() . 'modules', ['module_name' => $name, 'installed_version' => $module['headers']['version']]);
+            $this->ci->db->insert(db_prefix() . 'modules', ['branch_id' => $b_id,'module_name' => $name, 'installed_version' => $module['headers']['version']]);
         }
 
         include_once($module['init_file']);

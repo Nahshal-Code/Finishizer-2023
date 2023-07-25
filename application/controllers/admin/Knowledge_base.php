@@ -172,6 +172,7 @@ class Knowledge_base extends AdminController
         }
         if ($this->input->post()) {
             $post_data        = $this->input->post();
+            $post_data['branch_id']=$this->session->userdata('selectedbranch_id');
             $article_add_edit = isset($post_data['article_add_edit']);
             if (isset($post_data['article_add_edit'])) {
                 unset($post_data['article_add_edit']);

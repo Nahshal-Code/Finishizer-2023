@@ -39,10 +39,7 @@
             </div>
             <?php } ?>
             <?php echo form_open_multipart($this->uri->uri_string(), ['class' => 'staff-form', 'autocomplete' => 'off']); ?>
-<<<<<<< HEAD
             
-=======
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
             <div class="col-md-<?php if (!isset($member)) {
     echo '8 col-md-offset-2';
 } else {

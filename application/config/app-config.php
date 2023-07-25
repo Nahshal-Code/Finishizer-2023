@@ -32,7 +32,7 @@ define('APP_BASE_URL', 'http://localhost/finishizer_erp3.0.5/');
 *
 * Auto added on install
 */
-define('APP_ENC_KEY', 'b323d480ffa33145d612160ea3bf85d9');
+define('APP_ENC_KEY', '7bed2add57df6ffadab1069d10f021f5');
 
 /**
  * Database Credentials
