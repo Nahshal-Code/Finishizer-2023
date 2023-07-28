@@ -219,7 +219,8 @@
                                     <?php } ?>
                                 </div>
                                 <?php $rel_id = (isset($member) ? $member->staffid : false); ?>
-                                <?php echo render_custom_fields('staff', $rel_id); ?>
+                                <?php $branch_id = $this->session->userdata('selectedbranch_id');?>
+                                <?php echo render_custom_fields('staff', $rel_id,['branch_id',$branch_id]); ?>
 
                                 <div class="row">
                                     <div class="col-md-12">

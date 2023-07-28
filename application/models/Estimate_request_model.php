@@ -282,6 +282,8 @@ class Estimate_request_model extends App_Model
      */
     public function get_status($id = '', $where = [])
     {
+        $bid = get_current_branch();
+        $branch_filter = "branch_id='". $bid."' OR branch_id='0'";
         $this->db->where($where);
         if (is_numeric($id)) {
             $this->db->where('id', $id);
@@ -292,6 +294,7 @@ class Estimate_request_model extends App_Model
         $statuses = $this->app_object_cache->get('estimate-request-all-statuses');
 
         if (!$statuses) {
+            $this->db->where($branch_filter);
             $this->db->order_by('statusorder', 'asc');
 
             $statuses = $this->db->get(db_prefix() . 'estimate_request_status')->result_array();

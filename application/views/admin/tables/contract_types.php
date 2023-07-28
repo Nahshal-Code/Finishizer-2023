@@ -7,8 +7,11 @@ $aColumns = [
     ];
 $sIndexColumn = 'id';
 $sTable       = db_prefix() . 'contracts_types';
-
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], ['id']);
+$bid = get_current_branch();
+$swhere = [
+    'AND branch_id=' . $bid ,
+    ];
+$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, ['id']);
 $output  = $result['output'];
 $rResult = $result['rResult'];
 

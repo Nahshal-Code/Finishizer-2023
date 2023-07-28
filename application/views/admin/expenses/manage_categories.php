@@ -12,7 +12,12 @@
                 </div>
                 <div class="panel_s">
                     <div class="panel-body panel-table-full">
-                        <?php render_datatable([_l('id'), _l('name'), _l('dt_expense_description'), _l('options')], 'expenses-categories'); ?>
+                        <?php render_datatable([
+                            _l('id'),
+                            _l('name'),
+                            _l('dt_expense_description'),
+                            _l('options')]
+                            , 'expenses-categories'); ?>
                     </div>
                 </div>
             </div>

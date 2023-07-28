@@ -32,12 +32,16 @@ if (count($custom_fields) > 4) {
     @$this->ci->db->query('SET SQL_BIG_SELECTS=1');
 }
 
-$where = hooks()->apply_filters('staff_table_sql_where', []);
-
+//$where = hooks()->apply_filters('staff_table_sql_where', []);
+$bid = get_current_branch();
+$where = [
+    'AND branch_id=' . $bid ,
+    ];
 $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, [
     'profile_image',
     'lastname',
     'staffid',
+    'branch_id'
     ]);
 
 $output  = $result['output'];

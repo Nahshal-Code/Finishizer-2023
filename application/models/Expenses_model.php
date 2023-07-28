@@ -709,11 +709,13 @@ class Expenses_model extends App_Model
      */
     public function get_category($id = '')
     {
+        $bid = get_current_branch();
         if (is_numeric($id)) {
             $this->db->where('id', $id);
 
             return $this->db->get(db_prefix() . 'expenses_categories')->row();
         }
+        $this->db->where('branch_id', $bid);
         $this->db->order_by('name', 'asc');
 
         return $this->db->get(db_prefix() . 'expenses_categories')->result_array();

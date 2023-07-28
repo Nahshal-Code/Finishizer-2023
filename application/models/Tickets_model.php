@@ -1191,12 +1191,14 @@ class Tickets_model extends App_Model
      */
     public function get_priority($id = '')
     {
+        $bid = get_current_branch();
+        $branch_filter = "branch_id='". $bid."' OR branch_id='0'";
         if (is_numeric($id)) {
             $this->db->where('priorityid', $id);
-
             return $this->db->get(db_prefix() . 'tickets_priorities')->row();
         }
-
+        
+            $this->db->where($branch_filter);
         return $this->db->get(db_prefix() . 'tickets_priorities')->result_array();
     }
 
@@ -1339,11 +1341,14 @@ class Tickets_model extends App_Model
      */
     public function get_ticket_status($id = '')
     {
+        $bid = get_current_branch();
+        $branch_filter = "branch_id='". $bid."' OR branch_id='0'";
         if (is_numeric($id)) {
             $this->db->where('ticketstatusid', $id);
 
             return $this->db->get(db_prefix() . 'tickets_status')->row();
         }
+        $this->db->where($branch_filter);
         $this->db->order_by('statusorder', 'asc');
 
         return $this->db->get(db_prefix() . 'tickets_status')->result_array();
@@ -1419,12 +1424,13 @@ class Tickets_model extends App_Model
     // Ticket services
     public function get_service($id = '')
     {
+               
         if (is_numeric($id)) {
             $this->db->where('serviceid', $id);
 
             return $this->db->get(db_prefix() . 'services')->row();
         }
-
+        
         $this->db->order_by('name', 'asc');
 
         return $this->db->get(db_prefix() . 'services')->result_array();

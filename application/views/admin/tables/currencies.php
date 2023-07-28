@@ -7,7 +7,11 @@ $aColumns = [
     ];
 $sIndexColumn = 'id';
 $sTable       = db_prefix() . 'currencies';
-$result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], [
+$bid = get_current_branch();
+$swhere = [
+    'AND branch_id=' . $bid ,'OR branch_id=0',
+    ];
+$result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, [
     'id',
     'isdefault',
     'placement',

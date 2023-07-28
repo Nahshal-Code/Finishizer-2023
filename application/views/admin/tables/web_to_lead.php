@@ -6,8 +6,11 @@ $aColumns = ['id', 'name', '(SELECT COUNT(id) FROM '.db_prefix().'leads WHERE '.
 
 $sIndexColumn = 'id';
 $sTable       = db_prefix().'web_to_lead';
-
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], ['form_key', 'id']);
+$bid = get_current_branch();
+$swhere = [
+    'AND branch_id=' . $bid ,
+    ];
+$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, ['form_key', 'id']);
 $output  = $result['output'];
 $rResult = $result['rResult'];
 

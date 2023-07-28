@@ -105,6 +105,7 @@ class Payment_modes_model extends App_Model
 
         $this->db->insert(db_prefix() . 'payment_modes', [
             'name'                => $data['name'],
+            'branch_id'           => $data['branch_id'],
             'description'         => nl2br_save_html($data['description']),
             'active'              => $data['active'],
             'expenses_only'       => $data['expenses_only'],

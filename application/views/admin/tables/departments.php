@@ -10,8 +10,11 @@ $aColumns = [
     ];
 $sIndexColumn = 'departmentid';
 $sTable       = db_prefix() . 'departments';
-
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], ['email', 'hidefromclient', 'host', 'encryption', 'password', 'delete_after_import', 'imap_username', 'folder']);
+$bid = get_current_branch();
+$swhere = [
+    'AND branch_id=' . $bid ,
+    ];
+$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, ['email', 'hidefromclient', 'host', 'encryption', 'password', 'delete_after_import', 'imap_username', 'folder']);
 $output  = $result['output'];
 $rResult = $result['rResult'];
 

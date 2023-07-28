@@ -614,12 +614,14 @@ class Leads_model extends App_Model
      */
     public function get_source($id = false)
     {
+        $bid = get_current_branch();
+        $branch_filter = "branch_id='". $bid."' OR branch_id='0'";
         if (is_numeric($id)) {
             $this->db->where('id', $id);
 
             return $this->db->get(db_prefix() . 'leads_sources')->row();
         }
-
+        $this->db->where($branch_filter);
         $this->db->order_by('name', 'asc');
 
         return $this->db->get(db_prefix() . 'leads_sources')->result_array();
@@ -706,6 +708,9 @@ class Leads_model extends App_Model
         $statuses = $this->app_object_cache->get('leads-all-statuses');
 
         if (!$statuses) {
+            $bid = get_current_branch();
+            $branch_filter = "branch_id='". $bid."' OR branch_id='0'";
+            $this->db->where($branch_filter);
             $this->db->order_by('statusorder', 'asc');
 
             $statuses = $this->db->get(db_prefix() . 'leads_status')->result_array();
