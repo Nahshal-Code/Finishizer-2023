@@ -37,7 +37,9 @@ class Custom_fields extends AdminController
     {
         if ($this->input->post()) {
             if ($id == '') {
-                $id = $this->custom_fields_model->add($this->input->post());
+                $data = $this->input->post();
+                $data['branch_id']=$this->session->userdata('selectedbranch_id');
+                $id = $this->custom_fields_model->add($data);
                 set_alert('success', _l('added_successfully', _l('custom_field')));
                 echo json_encode(['id' => $id]);
                 die;

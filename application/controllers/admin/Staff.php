@@ -13,6 +13,7 @@ class Staff extends AdminController
         if ($this->input->is_ajax_request()) {
             $this->app->get_table_data('staff');
         }
+        $br_id = $this->session->userdata('selectedbranch_id'); 
         $data['staff_members'] = $this->staff_model->get('', ['active' => 1]);
         $data['title']         = _l('staff_members');
         $this->load->view('admin/staff/manage', $data);

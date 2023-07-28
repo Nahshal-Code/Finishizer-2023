@@ -413,7 +413,11 @@ class Tickets extends AdminController
             ];
             $sIndexColumn = 'id';
             $sTable       = db_prefix() . 'tickets_predefined_replies';
-            $result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], [
+            $bid = get_current_branch();
+            $swhere = [
+                'AND branch_id=' . $bid ,
+            ];
+            $result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, [
                 'id',
             ]);
             $output  = $result['output'];
@@ -604,7 +608,11 @@ class Tickets extends AdminController
             ];
             $sIndexColumn = 'serviceid';
             $sTable       = db_prefix() . 'services';
-            $result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], [
+            $bid = get_current_branch();
+            $swhere = [
+                'AND branch_id=' . $bid ,
+            ];
+            $result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, [
                 'serviceid',
             ]);
             $output  = $result['output'];

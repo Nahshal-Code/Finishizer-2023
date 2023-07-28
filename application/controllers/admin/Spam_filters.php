@@ -23,8 +23,9 @@ class Spam_filters extends AdminController
             ];
             $sIndexColumn = 'id';
             $sTable       = db_prefix() . 'spam_filters';
+            $bid = get_current_branch();
             $result       = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [
-                'AND type ="' . $filter_type . '" AND rel_type="' . $rel_type . '"',
+                'AND branch_id="' . $bid .'"AND type ="' . $filter_type . '" AND rel_type="' . $rel_type . '"',
             ], [
                 'id',
             ]);

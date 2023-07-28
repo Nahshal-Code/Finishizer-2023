@@ -363,7 +363,9 @@ class Expenses extends AdminController
         }
         if ($this->input->post()) {
             if (!$this->input->post('id')) {
-                $id = $this->expenses_model->add_category($this->input->post());
+                $data             = $this->input->post();
+                $data['branch_id']=$this->session->userdata('selectedbranch_id');
+                $id = $this->expenses_model->add_category($data);
                 echo json_encode([
                     'success' => $id ? true : false,
                     'message' => $id ? _l('added_successfully', _l('expense_category')) : '',
