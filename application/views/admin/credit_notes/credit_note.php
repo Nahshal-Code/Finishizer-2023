@@ -261,7 +261,8 @@
                                     <?php $value = (isset($credit_note) ? $credit_note->adminnote : ''); ?>
                                     <?php echo render_textarea('adminnote', 'credit_note_admin_note', $value); ?>
                                     <?php $rel_id = (isset($credit_note) ? $credit_note->id : false); ?>
-                                    <?php echo render_custom_fields('credit_note', $rel_id); ?>
+                                    <?php $bid = get_current_branch();?>
+                                    <?php echo render_custom_fields('credit_note', $rel_id,['branch_id=' . $bid ,]); ?>
                                 </div>
                             </div>
                         </div>

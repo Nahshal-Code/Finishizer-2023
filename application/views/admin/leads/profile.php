@@ -485,7 +485,8 @@
             </div>
             <div class="col-md-12 mtop15">
                 <?php $rel_id = (isset($lead) ? $lead->id : false); ?>
-                <?php echo render_custom_fields('leads', $rel_id); ?>
+                <?php $bid = get_current_branch();?>
+                <?php echo render_custom_fields('leads', $rel_id,['branch_id=' . $bid ,]); ?>
             </div>
             <div class="clearfix"></div>
         </div>

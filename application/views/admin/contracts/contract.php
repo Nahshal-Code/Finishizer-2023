@@ -122,7 +122,8 @@
                         <?php $value = (isset($contract) ? $contract->description : ''); ?>
                         <?php echo render_textarea('description', 'contract_description', $value, ['rows' => 10]); ?>
                         <?php $rel_id = (isset($contract) ? $contract->id : false); ?>
-                        <?php echo render_custom_fields('contracts', $rel_id); ?>
+                        <?php $bid = get_current_branch();?>
+                        <?php echo render_custom_fields('contracts', $rel_id,['branch_id=' . $bid ,]); ?>
 
                         <div class="btn-bottom-toolbar text-right">
                             <button type="submit" class="btn btn-primary">

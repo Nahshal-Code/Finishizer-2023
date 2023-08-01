@@ -84,7 +84,8 @@
                             </select>
                         </div>
                         <?php $rel_id = (isset($contact) ? $contact->id : false); ?>
-                        <?php echo render_custom_fields('contacts', $rel_id); ?>
+                        <?php $bid = get_current_branch();?>
+                        <?php echo render_custom_fields('contacts', $rel_id,['branch_id=' . $bid ,]); ?>
 
 
                         <!-- fake fields are a workaround for chrome autofill getting the wrong fields -->

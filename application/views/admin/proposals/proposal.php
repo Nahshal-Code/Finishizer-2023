@@ -174,7 +174,9 @@
                                     </div>
                                 </div>
                                 <?php $fc_rel_id = (isset($proposal) ? $proposal->id : false); ?>
-                                <?php echo render_custom_fields('proposal', $fc_rel_id); ?>
+                                <?php $bid = get_current_branch();
+                                ?>
+                                <?php echo render_custom_fields('proposal', $fc_rel_id,['branch_id=' . $bid ,]); ?>
                                 <div class="form-group no-mbot">
                                     <label for="tags" class="control-label"><i class="fa fa-tag" aria-hidden="true"></i>
                                         <?php echo _l('tags'); ?></label>

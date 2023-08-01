@@ -119,7 +119,8 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <?php echo render_custom_fields('tickets'); ?>
+                            <?php $bid = get_current_branch();?>
+                                <?php echo render_custom_fields('tickets','',['branch_id=' . $bid ,]); ?>
                             </div>
 
                             <div class="col-md-12">

@@ -62,7 +62,8 @@
                 <div class="clearfix mbot15"></div>
                 <?php echo render_input('unit', 'unit'); ?>
                 <div id="custom_fields_items">
-                    <?php echo render_custom_fields('items'); ?>
+                    <?php $bid = get_current_branch();?>
+                    <?php echo render_custom_fields('items','',['branch_id=' . $bid ,]); ?>
                 </div>
                 <?php echo render_select('group_id', $items_groups, ['id', 'name'], 'item_group'); ?>
                 <?php hooks()->do_action('before_invoice_item_modal_form_close'); ?>

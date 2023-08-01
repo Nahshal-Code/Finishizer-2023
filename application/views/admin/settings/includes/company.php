@@ -11,7 +11,8 @@
     <?php echo render_input('settings[invoice_company_postal_code]', 'settings_sales_postal_code', get_option('invoice_company_postal_code')); ?>
     <?php echo render_input('settings[invoice_company_phonenumber]', 'settings_sales_phonenumber', get_option('invoice_company_phonenumber')); ?>
     <?php echo render_input('settings[company_vat]', 'company_vat_number', get_option('company_vat')); ?>
-    <?php echo render_custom_fields('company', 0); ?>
+    <?php $bid = get_current_branch();?>
+    <?php echo render_custom_fields('company', 0,['branch_id=' . $bid ,]); ?>
     <hr />
     <?php echo render_textarea('settings[company_info_format]', 'company_info_format', clear_textarea_breaks(get_option('company_info_format')), ['rows' => 8, 'style' => 'line-height:20px;']); ?>
     <p>
@@ -25,7 +26,7 @@
         <a href="#" class="settings-textarea-merge-field" data-to="company_info_format">{vat_number}</a>,
         <a href="#" class="settings-textarea-merge-field" data-to="company_info_format">{vat_number_with_label}</a>
     </p>
-    <?php $custom_company_fields = get_company_custom_fields();
+    <?php $custom_company_fields = get_company_custom_fields($bid);
     if (count($custom_company_fields) > 0) {
         echo '<hr />';
         echo '<p class="font-medium"><b>' . _l('custom_fields') . '</b></p>';

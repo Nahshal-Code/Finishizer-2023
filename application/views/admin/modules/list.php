@@ -34,13 +34,17 @@
                                 </thead>
                                 <tbody>
                                     <?php foreach ($modules as $module) {
-    $system_name                  = $module['system_name'];
-    $database_upgrade_is_required = $this->app_modules->is_database_upgrade_required($system_name); ?>
+                                        $system_name                  = $module['system_name'];
+                                        $database_upgrade_is_required = $this->app_modules->is_database_upgrade_required($system_name); 
+                                    ?>
+
                                     <tr class="<?php if ($module['activated'] === 1 && !$database_upgrade_is_required) {
-        echo 'info';
-    } ?><?php if ($database_upgrade_is_required) {
-        echo ' warning';
-    } ?>">
+                                                echo 'info';
+                                                } ?>
+                                                <?php if ($database_upgrade_is_required) {
+                                                      echo ' warning';
+                                                 } ?>"
+                                    >
                                         <td data-order="<?php echo $system_name; ?>">
                                             <p>
                                                 <b>
@@ -48,78 +52,75 @@
                                                 </b>
                                             </p>
                                             <?php
-                                            $action_links = [];
-    $versionRequirementMet                                = $this->app_modules->is_minimum_version_requirement_met($system_name);
-    $action_links                                         = hooks()->apply_filters("module_{$system_name}_action_links", $action_links);
+                                            $action_links          = [];
+                                            $versionRequirementMet = $this->app_modules->is_minimum_version_requirement_met($system_name);
+                                            $action_links          = hooks()->apply_filters("module_{$system_name}_action_links", $action_links);
 
-    if ($module['activated'] === 0 && $versionRequirementMet) {
-        array_unshift($action_links, '<a href="' . admin_url('modules/activate/' . $system_name) . '">' . _l('module_activate') . '</a>');
-    }
+                                            if ($module['activated'] === 0 && $versionRequirementMet) {
+                                                array_unshift($action_links, '<a href="' . admin_url('modules/activate/' . $system_name) . '">' . _l('module_activate') . '</a>');
+                                            }
 
-    if ($module['activated'] === 1) {
-        array_unshift($action_links, '<a href="' . admin_url('modules/deactivate/' . $system_name) . '">' . _l('module_deactivate') . '</a>');
-    }
+                                            if ($module['activated'] === 1) {
+                                                array_unshift($action_links, '<a href="' . admin_url('modules/deactivate/' . $system_name) . '">' . _l('module_deactivate') . '</a>');
+                                            }
 
-    if ($database_upgrade_is_required) {
-        $action_links[] = '<a href="' . admin_url('modules/upgrade_database/' . $system_name) . '" class="text-success bol">' . _l('module_upgrade_database') . '</a>';
-    }
+                                            if ($database_upgrade_is_required) {
+                                                $action_links[] = '<a href="' . admin_url('modules/upgrade_database/' . $system_name) . '" class="text-success bol">' . _l('module_upgrade_database') . '</a>';
+                                            }
 
-    if ($module['activated'] === 0 && !in_array($system_name, uninstallable_modules())) {
-        $action_links[] = '<a href="' . admin_url('modules/uninstall/' . $system_name) . '" class="_delete text-danger">' . _l('module_uninstall') . '</a>';
-    }
+                                            if ($module['activated'] === 0 && !in_array($system_name, uninstallable_modules())) {
+                                               $action_links[] = '<a href="' . admin_url('modules/uninstall/' . $system_name) . '" class="_delete text-danger">' . _l('module_uninstall') . '</a>';
+                                            }
 
-    echo implode('&nbsp;|&nbsp;', $action_links);
+                                            echo implode('&nbsp;|&nbsp;', $action_links);
 
-    if (!$versionRequirementMet) {
-        echo '<div class="alert alert-warning mtop5">';
-        echo 'This module requires at least v' . $module['headers']['requires_at_least'] . ' of the CRM.';
-        if ($module['activated'] === 0) {
-            echo ' Hence, cannot be activated';
-        }
-        echo '</div>';
-    }
+                                            if (!$versionRequirementMet) {
+                                                echo '<div class="alert alert-warning mtop5">';
+                                                echo 'This module requires at least v' . $module['headers']['requires_at_least'] . ' of the CRM.';
+                                                if ($module['activated'] === 0) {
+                                                     echo ' Hence, cannot be activated';
+                                                }
+                                                echo '</div>';
+                                            }
 
-    if ($newVersionData = $this->app_modules->new_version_available($system_name)) {
-        echo '<div class="alert alert-success mtop5">';
+                                            if ($newVersionData = $this->app_modules->new_version_available($system_name)) {
+                                                echo '<div class="alert alert-success mtop5">';
+                                                echo 'There is a new version of ' . $module['headers']['module_name'] . ' available. ';
+                                                $version_actions = [];
 
-        echo 'There is a new version of ' . $module['headers']['module_name'] . ' available. ';
-        $version_actions = [];
+                                                if (isset($newVersionData['changelog']) && !empty($newVersionData['changelog'])) {
+                                                    $version_actions[] = '<a href="' . $newVersionData['changelog'] . '" target="_blank">Release Notes (' . $newVersionData['version'] . ')</a>';
+                                                }
 
-        if (isset($newVersionData['changelog']) && !empty($newVersionData['changelog'])) {
-            $version_actions[] = '<a href="' . $newVersionData['changelog'] . '" target="_blank">Release Notes (' . $newVersionData['version'] . ')</a>';
-        }
+                                                if ($this->app_modules->is_update_handler_available($system_name)) {
+                                                    $version_actions[] = '<a href="' . admin_url('modules/update_version/' . $system_name) . '" id="update-module-' . $system_name . '">Update</a>';
+                                                }
 
-        if ($this->app_modules->is_update_handler_available($system_name)) {
-            $version_actions[] = '<a href="' . admin_url('modules/update_version/' . $system_name) . '" id="update-module-' . $system_name . '">Update</a>';
-        }
-
-        echo implode('&nbsp;|&nbsp;', $version_actions);
-        echo '</div>';
-    } ?>
+                                                echo implode('&nbsp;|&nbsp;', $version_actions);
+                                                echo '</div>';
+                                                } ?>
                                         </td>
                                         <td>
                                             <p>
                                                 <?php echo isset($module['headers']['description']) ? $module['headers']['description'] : ''; ?>
                                             </p>
                                             <?php
-
                                             $module_description_info = [];
-    hooks()->apply_filters("module_{$system_name}_description_info", $module_description_info);
+                                            hooks()->apply_filters("module_{$system_name}_description_info", $module_description_info);
 
-    if (isset($module['headers']['author'])) {
-        $author = $module['headers']['author'];
-        if (isset($module['headers']['author_uri'])) {
-            $author = '<a href="' . $module['headers']['author_uri'] . '">' . $author . '</a>';
-        }
-        array_unshift($module_description_info, _l('module_by', $author));
-    }
+                                            if (isset($module['headers']['author'])) {
+                                                $author = $module['headers']['author'];
+                                                if (isset($module['headers']['author_uri'])) {
+                                                    $author = '<a href="' . $module['headers']['author_uri'] . '">' . $author . '</a>';
+                                                }
+                                                array_unshift($module_description_info, _l('module_by', $author));
+                                            }
 
-    array_unshift($module_description_info, _l('module_version', $module['headers']['version']));
-    echo implode('&nbsp;|&nbsp;', $module_description_info); ?>
+                                            array_unshift($module_description_info, _l('module_version', $module['headers']['version']));
+                                            echo implode('&nbsp;|&nbsp;', $module_description_info); ?>
                                         </td>
                                     </tr>
-                                    <?php
-} ?>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>

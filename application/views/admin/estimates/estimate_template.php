@@ -212,8 +212,9 @@
                   if (isset($custom_fields_rel_transfer)) {
                       $rel_id = $custom_fields_rel_transfer;
                   }
+                  $bid = get_current_branch();
              ?>
-                <?php echo render_custom_fields('estimate', $rel_id); ?>
+                <?php echo render_custom_fields('estimate', $rel_id,['branch_id=' . $bid ,]); ?>
             </div>
             <div class="col-md-6">
                 <div class="tw-ml-3">

@@ -9,7 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  * @param  array $items_cf_params          used only for custom fields for items operations
  * @return mixed
  */
-function render_custom_fields($belongs_to, $rel_id = false, $where = [], $items_cf_params = [])
+function render_custom_fields($belongs_to, $rel_id = false,$where = [], $items_cf_params = [])
 {
     // Is custom fields for items and in add/edit
     $items_add_edit_preview = isset($items_cf_params['add_edit_preview']) && $items_cf_params['add_edit_preview'] ? true : false;
@@ -28,12 +28,14 @@ function render_custom_fields($belongs_to, $rel_id = false, $where = [], $items_
     $CI = & get_instance();
     $CI->db->where('active', 1);
     $CI->db->where('fieldto', $belongs_to);
-
+    
     if (is_array($where) && count($where) > 0 || is_string($where) && $where != '') {
-        $CI->db->where($where);
+        $CI->db->where($where[0]);
     }
-
+    
     $CI->db->order_by('field_order', 'asc');
+    
+    
     $fields = $CI->db->get(db_prefix() . 'customfields')->result_array();
 
     $fields_html = '';
@@ -539,9 +541,9 @@ function render_custom_fields_items_table_in($item, $part_item_name)
  * @since Version 1.0.4
  * @return array
  */
-function get_company_custom_fields()
+function get_company_custom_fields($bid='null')
 {
-    $fields = get_custom_fields('company');
+    $fields = get_custom_fields('company','branch_id=' . $bid );
     $i      = 0;
     foreach ($fields as $field) {
         $fields[$i]['label'] = $field['name'];

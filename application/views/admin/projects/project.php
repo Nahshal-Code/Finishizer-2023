@@ -232,7 +232,8 @@
                                         data-role="tagsinput">
                                 </div>
                                 <?php $rel_id_custom_field = (isset($project) ? $project->id : false); ?>
-                                <?php echo render_custom_fields('projects', $rel_id_custom_field); ?>
+                                <?php $bid = get_current_branch();?>
+                                <?php echo render_custom_fields('projects', $rel_id_custom_field,['branch_id=' . $bid ,]); ?>
                                 <p class="bold"><?php echo _l('project_description'); ?></p>
                                 <?php $contents = ''; if (isset($project)) {
                             $contents           = $project->description;
