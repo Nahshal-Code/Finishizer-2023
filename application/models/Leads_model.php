@@ -919,9 +919,9 @@ class Leads_model extends App_Model
      * Get email integration config
      * @return object
      */
-    public function get_email_integration()
+    public function get_email_integration($bid = 'null')
     {
-        $this->db->where('id', 1);
+        $this->db->where('id', $bid);
 
         return $this->db->get(db_prefix() . 'leads_email_integration')->row();
     }
@@ -940,13 +940,40 @@ class Leads_model extends App_Model
     }
 
     /**
+     * Add email integration details of a branch
+     */
+    public function add_email_integration($id){
+        $data = [
+            'id' => $id,
+            'active' => 0,
+            'check_every' => 10,
+            'responsible' => 0,
+            'lead_source' => 0,
+            'lead_status' => 0,
+            'encryption' => 'tls',
+            'folder' => 'INBOX',
+            'last_run' => '',
+            'notify_lead_imported' => 1,
+            'notify_lead_contact_more_times' => 1,
+            'notify_type' => 'assigned',
+            'notify_ids' => '',
+            'mark_public' => 0,
+            'only_loop_on_unseen_emails' => 1,
+            'delete_after_import' => 0,
+            'create_task_if_customer' => 1,
+        ];
+    
+    $this->db->insert(db_prefix() . 'leads_email_integration', $data);
+    }
+    /**
      * Update email integration config
      * @param  mixed $data All $_POST data
      * @return boolean
      */
     public function update_email_integration($data)
     {
-        $this->db->where('id', 1);
+        $bid = get_current_branch();
+        $this->db->where('id', $bid);
         $original_settings = $this->db->get(db_prefix() . 'leads_email_integration')->row();
 
         $data['create_task_if_customer']        = isset($data['create_task_if_customer']) ? 1 : 0;
@@ -1008,7 +1035,7 @@ class Leads_model extends App_Model
             }
         }
 
-        $this->db->where('id', 1);
+        $this->db->where('id', $bid);
         $this->db->update(db_prefix() . 'leads_email_integration', $data);
         if ($this->db->affected_rows() > 0) {
             return true;

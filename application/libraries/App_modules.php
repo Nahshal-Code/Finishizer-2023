@@ -44,7 +44,7 @@ class App_modules
     {
         $this->ci = &get_instance();
         $this->ci->load->helper('directory');
-
+        $this->ci->load->helper('admin_helper');
         /**
          * The modules feature is added in version 2.3.0 if the current database version is smaller don't try to load the modules
          * This code exists because after update, the database is not yet updated and the table modules does not exists and will throw errors.
@@ -52,8 +52,8 @@ class App_modules
         if ($this->ci->app->get_current_db_version() < 230) {
             return;
         }
-
-        $this->initialize();
+        $bid = get_current_branch();
+        $this->initialize($bid);
     }
 
     /**
@@ -61,8 +61,9 @@ class App_modules
      * @param  string $name Module Name [system_name]
      * @return boolean
      */
-    public function activate($name,$b_id)
+    public function activate($name)
     {
+        $bid = get_current_branch();
         $module = $this->get($name);
 
         if (!$module) {
@@ -73,12 +74,12 @@ class App_modules
          * Check if module is already added to database
          */
 
-        if (!$this->module_exists_in_database($name)) {
+        if (!$this->module_exists_in_database($name,$bid)) {
             
             $this->ci->db->where('module_name', $name);
-            $this->ci->db->insert(db_prefix() . 'modules', ['branch_id' => $b_id,'module_name' => $name, 'installed_version' => $module['headers']['version']]);
+            $this->ci->db->insert(db_prefix() . 'modules', ['branch_id' => $bid,'module_name' => $name, 'installed_version' => $module['headers']['version']]);
         }
-
+        
         include_once($module['init_file']);
 
         /**
@@ -136,7 +137,7 @@ class App_modules
 
 
         /**
-         * After module is activated action
+         * After module is deactivated action
          */
         hooks()->do_action('module_deactivated', $module);
 
@@ -430,13 +431,15 @@ class App_modules
      * @param  string $name module system name
      * @return mixed
      */
-    public function get_database_module($name)
+    public function get_database_module($name,$bid='null')
     {
         if (isset($this->db_modules[$name])) {
             return $this->db_modules[$name];
         }
 
         $this->ci->db->where('module_name', $name);
+        $this->ci->db->where('branch_id', $bid);
+
 
         return $this->ci->db->get(db_prefix() . 'modules')->row();
     }
@@ -445,12 +448,12 @@ class App_modules
      * Initialize all modules
      * @return null
      */
-    public function initialize()
+    public function initialize($bid='null')
     {
         // For caching
-        $this->query_db_modules();
+        $this->query_db_modules($bid);
 
-        foreach (static::get_valid_modules() as $module) {
+        foreach (static::get_valid_modules($bid) as $module) {
             $name = $module['name'];
             // If the module hasn't already been added and isn't a file
             if (!isset($this->modules[$name])) {
@@ -474,7 +477,7 @@ class App_modules
                 $this->modules[$name]['path'] = $module['path'];
 
                 // Check if module is activated
-                $moduleDB = $this->get_database_module($name);
+                $moduleDB = $this->get_database_module($name,$bid);
 
                 if ($moduleDB && $moduleDB->active == 1) {
                     $this->modules[$name]['activated'] = 1;
@@ -582,16 +585,16 @@ class App_modules
      * @param  string $name module system name
      * @return boolean
      */
-    private function module_exists_in_database($name)
+    private function module_exists_in_database($name,$bid='null')
     {
-        return (bool) $this->get_database_module($name);
+        return (bool) $this->get_database_module($name,$bid);
     }
 
     /**
      * Get valid modules
      * @return array
      */
-    public static function get_valid_modules()
+    public static function get_valid_modules($bid='null')
     {
         /**
         * Modules path
@@ -600,7 +603,13 @@ class App_modules
         *
         * @var array
         */
-        $modules = directory_map(APP_MODULES_PATH, 1);
+        if($bid == 'null'){
+            $path = APP_MODULES_PATH;
+        }
+        else{
+            $path = './modules'.$bid.'/';
+        }
+        $modules = directory_map($path, 1);
 
         $valid_modules = [];
 
@@ -617,7 +626,7 @@ class App_modules
 
                 // If the module hasn't already been added and isn't a file
                 if (!stripos($name, '.')) {
-                    $module_path = APP_MODULES_PATH . $name . '/';
+                    $module_path = $path . $name . '/';
                     $init_file   = $module_path . $name . '.php';
 
                     // Make sure a valid module file by the same name as the folder exists
@@ -635,8 +644,11 @@ class App_modules
         return $valid_modules;
     }
 
-    private function query_db_modules()
+    private function query_db_modules($bid='null')
     {
+        if($bid != 'null'){
+            $this->ci->db->where('branch_id',$bid);
+        }
         $db_modules = $this->ci->db->get(db_prefix() . 'modules')->result();
 
         foreach ($db_modules as $db_module) {

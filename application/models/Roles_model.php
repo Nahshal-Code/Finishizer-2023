@@ -86,7 +86,7 @@ class Roles_model extends App_Model
      * @param  mixed $id Optional role id
      * @return mixed     array if not id passed else object
      */
-    public function get($id = '')
+    public function get($id = '',$bid='')
     {
         if (is_numeric($id)) {
 
@@ -104,6 +104,11 @@ class Roles_model extends App_Model
             $this->app_object_cache->add('role-' . $id, $role);
 
             return $role;
+        }
+
+        if($bid){
+            $this->db->where('branch_id',$bid);
+            $this->db->or_where('branch_id',0);
         }
 
         return $this->db->get(db_prefix() . 'roles')->result_array();

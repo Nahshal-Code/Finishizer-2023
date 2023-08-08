@@ -23,7 +23,7 @@
                            <tr>
                            <td><?php echo $item->branch_id; ?></td>
                            <td><?php echo $item->branch_name; ?></td>
-                            <td><a href=<?php echo admin_url('dashboard/'.$item->branch_id); ?>
+                            <td><a href=<?php echo admin_url('branches/branch_home/'.$item->branch_id); ?>
                                 class="btn btn-primary">
                                 Go</a></td>
                             </tr>

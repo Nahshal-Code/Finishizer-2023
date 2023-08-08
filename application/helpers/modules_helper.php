@@ -331,3 +331,31 @@ function apply_filters_deprecated($tag, $args, $version, $replacement = false, $
 
     return hooks()->apply_filters_ref_array($tag, $args);
 }
+
+function custom_copy($src, $dst) { 
+   
+    // open the source directory
+    $dir = opendir($src); 
+   
+    // Make the destination directory if not exist
+    @mkdir($dst); 
+   
+    // Loop through the files in source directory
+    foreach (scandir($src) as $file) { 
+   
+        if (( $file != '.' ) && ( $file != '..' )) { 
+            if ( is_dir($src . '/' . $file) ) 
+            { 
+   
+                // Recursively calling custom copy function
+                // for sub directory 
+                custom_copy($src . '/' . $file, $dst . '/' . $file); 
+   
+            } 
+            else { 
+                copy($src . '/' . $file, $dst . '/' . $file); 
+            } 
+        } 
+    } 
+    closedir($dir);
+}  

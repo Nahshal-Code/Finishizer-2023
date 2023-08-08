@@ -28,7 +28,9 @@ class Roles extends AdminController
                 if (!has_permission('roles', '', 'create')) {
                     access_denied('roles');
                 }
-                $id = $this->roles_model->add($this->input->post());
+                $data = $this->input->post();
+                $data['branch_id'] = get_current_branch();
+                $id = $this->roles_model->add($data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('role')));
                     redirect(admin_url('roles/role/' . $id));

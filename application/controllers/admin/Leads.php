@@ -1158,12 +1158,13 @@ class Leads extends AdminController
 
     public function email_integration()
     {
+        $bid = get_current_branch();
         if (!is_admin()) {
             access_denied('Leads Email Intregration');
         }
         if ($this->input->post()) {
+            
             $data             = $this->input->post();
-            //$data['branch_id']=$this->session->userdata('selectedbranch_id'); 
             $data['password'] = $this->input->post('password', false);
 
             if (isset($data['fakeusernameremembered'])) {
@@ -1179,17 +1180,18 @@ class Leads extends AdminController
             }
             redirect(admin_url('leads/email_integration'));
         }
-        $data['roles']    = $this->roles_model->get();
+        $data['roles']    = $this->roles_model->get('',$bid);
         $data['sources']  = $this->leads_model->get_source();
         $data['statuses'] = $this->leads_model->get_status();
 
         $data['members'] = $this->staff_model->get('', [
             'active'       => 1,
             'is_not_staff' => 0,
+            'branch_id'       => $bid,
         ]);
 
         $data['title'] = _l('leads_email_integration');
-        $data['mail']  = $this->leads_model->get_email_integration();
+        $data['mail']  = $this->leads_model->get_email_integration($bid);
 
         $data['bodyclass'] = 'leads-email-integration';
         $this->load->view('admin/leads/email_integration', $data);

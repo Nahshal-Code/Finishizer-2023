@@ -8,8 +8,11 @@ $aColumns = [
 
 $sIndexColumn = 'roleid';
 $sTable       = db_prefix() . 'roles';
-
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], [], ['roleid']);
+$bid = get_current_branch();
+$swhere = [
+    'AND branch_id=' . $bid ,'OR branch_id=0',
+    ];
+$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $swhere, ['roleid']);
 $output  = $result['output'];
 $rResult = $result['rResult'];
 
