@@ -519,7 +519,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-12">
-                                        <?php echo render_custom_fields('tickets', $ticket->ticketid); ?>
+                                    <?php $bid = get_current_branch();?>
+                                        <?php echo render_custom_fields('tickets', $ticket->ticketid,['branch_id=' . $bid ,]); ?>
                                     </div>
                                 </div>
                                 <?php hooks()->do_action('add_single_ticket_tab_menu_content', $ticket); ?>

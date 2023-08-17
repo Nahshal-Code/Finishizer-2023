@@ -32,8 +32,8 @@ class Leads extends AdminController
             $data['switch_kanban'] = false;
             $data['bodyclass']     = 'kan-ban-body';
         }
-
-        $data['staff'] = $this->staff_model->get('', ['active' => 1]);
+        $bid = get_current_branch();
+        $data['staff'] = $this->staff_model->get('', ['active' => 1,'branch_id' => $bid,]);
         if (is_gdpr() && get_option('gdpr_enable_consent_for_leads') == '1') {
             $this->load->model('gdpr_model');
             $data['consent_purposes'] = $this->gdpr_model->get_consent_purposes();
@@ -124,10 +124,11 @@ class Leads extends AdminController
 
     private function _get_lead_data($id = '')
     {
+        $bid = get_current_branch();
         $reminder_data         = '';
         $data['lead_locked']   = false;
         $data['openEdit']      = $this->input->get('edit') ? true : false;
-        $data['members']       = $this->staff_model->get('', ['is_not_staff' => 0, 'active' => 1]);
+        $data['members']       = $this->staff_model->get('', ['is_not_staff' => 0, 'active' => 1,'branch_id'       => $bid,]);
         $data['status_id']     = $this->input->get('status_id') ? $this->input->get('status_id') : get_option('leads_default_status');
         $data['base_currency'] = get_base_currency();
 

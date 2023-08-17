@@ -369,7 +369,8 @@ function _maybe_translate_custom_field_name($name, $slug)
  */
 function get_table_custom_fields($field_to)
 {
-    return get_custom_fields($field_to, ['show_on_table' => 1]);
+    $bid = get_current_branch();
+    return get_custom_fields($field_to, ['show_on_table' => 1,'branch_id'=> $bid]);
 }
 /**
  * Get custom field value

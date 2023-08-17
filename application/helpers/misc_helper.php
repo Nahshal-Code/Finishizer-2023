@@ -353,8 +353,9 @@ function get_all_knowledge_base_articles_grouped($only_customers = true, $where 
  */
 function get_kb_groups()
 {
+    $bid = get_current_branch();
     $CI = & get_instance();
-
+    $CI->db->where('branch_id',$bid);
     return $CI->db->get(db_prefix() . 'knowledge_base_groups')->result_array();
 }
 /**

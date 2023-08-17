@@ -65,6 +65,7 @@ class Tickets extends AdminController
     {
         if ($this->input->post()) {
             $data            = $this->input->post();
+            $data['branch_id'] = get_current_branch();
             $data['message'] = html_purify($this->input->post('message', false));
             $id              = $this->tickets_model->add($data, get_staff_user_id());
             if ($id) {
@@ -88,6 +89,8 @@ class Tickets extends AdminController
         if (get_option('access_tickets_to_none_staff_members') == 0) {
             $whereStaff['is_not_staff'] = 0;
         }
+        $bid = get_current_branch();
+        $whereStaff['branch_id'] = $bid;
         $data['staff']     = $this->staff_model->get('', $whereStaff);
         $data['articles']  = $this->knowledge_base_model->get();
         $data['bodyclass'] = 'ticket';
@@ -103,7 +106,8 @@ class Tickets extends AdminController
                     $data['contact'] = $contact[0];
                 }
             }
-        } elseif ($this->input->get('contact_id') && $this->input->get('contact_id') > 0 && $this->input->get('userid')) {
+        }
+         elseif ($this->input->get('contact_id') && $this->input->get('contact_id') > 0 && $this->input->get('userid')) {
             $contact_id = $this->input->get('contact_id');
             if (total_rows(db_prefix() . 'contacts', ['active' => 1, 'id' => $contact_id]) == 1) {
                 $contact = $this->clients_model->get_contact($contact_id);

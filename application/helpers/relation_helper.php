@@ -29,7 +29,8 @@ function get_relation_data($type, $rel_id = '', $extra = [])
     } elseif ($type == 'contact' || $type == 'contacts') {
         if ($rel_id != '') {
             $data = $CI->clients_model->get_contact($rel_id);
-        } else {
+        } 
+        else {
             $where_contacts = db_prefix() . 'contacts.active=1';
             if (isset($extra['client_id']) && $extra['client_id'] != '') {
                 $where_contacts .= ' AND '. db_prefix() . 'contacts.userid='. $extra['client_id'];

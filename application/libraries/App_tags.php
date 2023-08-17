@@ -9,6 +9,7 @@ class App_tags
     public function __construct()
     {
         $this->ci = &get_instance();
+        $this->ci->load->helper('admin_helper');
     }
 
     public function get($name_or_id)
@@ -26,6 +27,7 @@ class App_tags
 
     public function create($data)
     {
+        $data['branch_id'] = get_current_branch();
         $this->ci->db->insert(db_prefix() . 'tags', $data);
 
         return $this->ci->db->insert_id();
@@ -143,6 +145,8 @@ class App_tags
         $tags = $this->ci->app_object_cache->get('db-tags-array');
 
         if (!$tags && !is_array($tags)) {
+            $bid = get_current_branch();
+            $this->ci->db->where('branch_id',$bid);
             $this->ci->db->order_by('name', 'ASC');
             $tags = $this->ci->db->get(db_prefix() . 'tags')->result_array();
             $this->ci->app_object_cache->add('db-tags-array', $tags);

@@ -48,12 +48,9 @@ foreach ($custom_fields as $key => $field) {
     array_push($join, 'LEFT JOIN ' . db_prefix() . 'customfieldsvalues as ctable_' . $key . ' ON ' . db_prefix() . 'tickets.ticketid = ctable_' . $key . '.relid AND ctable_' . $key . '.fieldto="' . $field['fieldto'] . '" AND ctable_' . $key . '.fieldid=' . $field['id']);
 }
 
-$bid = get_current_branch();
-$where = [
-    'AND branch_id=' . $bid ,
-    ];
-$filter = [];
 
+$filter = [];
+$where = [];
 if (isset($userid) && $userid != '') {
     array_push($where, 'AND ' . db_prefix() . 'tickets.userid = ' . $this->ci->db->escape_str($userid));
 } elseif (isset($by_email)) {
@@ -67,6 +64,8 @@ if (isset($where_not_ticket_id)) {
 if ($this->ci->input->post('project_id')) {
     array_push($where, 'AND project_id = ' . $this->ci->db->escape_str($this->ci->input->post('project_id')));
 }
+$bid = get_current_branch();
+array_push($where, 'AND ' . db_prefix() . 'tickets.branch_id = ' . $bid);
 
 $statuses  = $this->ci->tickets_model->get_ticket_status();
 $_statuses = [];

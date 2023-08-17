@@ -294,6 +294,7 @@ class Tasks extends AdminController
         }
 
         $data = [];
+        $bid = get_current_branch();
         // FOr new task add directly from the projects milestones
         if ($this->input->get('milestone_id')) {
             $this->db->where('id', $this->input->get('milestone_id'));
@@ -310,6 +311,7 @@ class Tasks extends AdminController
         }
         if ($this->input->post()) {
             $data                = $this->input->post();
+            $data['branch_id']  = $bid;
             $data['description'] = html_purify($this->input->post('description', false));
             if ($id == '') {
                 if (!has_permission('tasks', '', 'create')) {
@@ -385,7 +387,8 @@ class Tasks extends AdminController
                 ];
             }
         }
-        $data['members'] = $this->staff_model->get();
+        
+        $data['members'] = $this->staff_model->get('',['branch_id'       => $bid,]);
         $data['id']      = $id;
         $data['title']   = $title;
         $this->load->view('admin/tasks/task', $data);

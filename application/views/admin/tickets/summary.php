@@ -68,7 +68,8 @@ foreach ($statuses as $status) {
     if (isset($project_id)) {
         $_where = $_where . ' AND project_id=' . $project_id;
     }
-    $_where = $_where . ' AND merged_ticket_id IS NULL'; ?>
+    $bid = get_current_branch();
+    $_where = $_where . ' AND merged_ticket_id IS NULL AND branch_id ='.$bid; ?>
     <div class="col-md-2 col-xs-6 md:tw-border-r md:tw-border-solid md:tw-border-neutral-300 last:tw-border-r-0">
         <a href="#" data-cview="ticket_status_<?php echo $status['ticketstatusid']; ?>"
             class="tw-text-neutral-600 hover:tw-opacity-70 tw-inline-flex tw-items-center"

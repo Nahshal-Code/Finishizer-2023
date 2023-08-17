@@ -896,6 +896,8 @@ class Misc_model extends App_Model
 
 
             $this->db->where($where);
+            $bid = get_current_branch();
+            $this->db->where('branch_id',$bid);
 
             if ($limit != 0) {
                 $this->db->limit($limit);
@@ -1013,6 +1015,8 @@ class Misc_model extends App_Model
             if ($where != '') {
                 $this->db->where($where);
             }
+            $bid = get_current_branch();
+            $this->db->where('branch_id',$bid);
 
             if ($limit != 0) {
                 $this->db->limit($limit);
@@ -1124,6 +1128,9 @@ class Misc_model extends App_Model
                 AND ' . db_prefix() . 'taggables.rel_type=\'project\' GROUP BY rel_id HAVING COUNT(tag_id) = 1)
                 ');
         }
+
+        $bid = get_current_branch();
+        $this->db->where('tblprojects.branch_id',$bid);
 
         if ($limit != 0) {
             $this->db->limit($limit);

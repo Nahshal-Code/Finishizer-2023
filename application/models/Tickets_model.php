@@ -1278,6 +1278,8 @@ class Tickets_model extends App_Model
 
             return $this->db->get(db_prefix() . 'tickets_predefined_replies')->row();
         }
+        $bid = get_current_branch();
+        $this->db->where('branch_id', $bid);
 
         return $this->db->get(db_prefix() . 'tickets_predefined_replies')->result_array();
     }
@@ -1430,7 +1432,9 @@ class Tickets_model extends App_Model
 
             return $this->db->get(db_prefix() . 'services')->row();
         }
-        
+        $bid = get_current_branch();
+        $this->db->where('branch_id', $bid);
+
         $this->db->order_by('name', 'asc');
 
         return $this->db->get(db_prefix() . 'services')->result_array();

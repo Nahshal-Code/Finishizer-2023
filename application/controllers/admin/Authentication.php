@@ -15,7 +15,6 @@ class Authentication extends App_Controller
         load_admin_language();
         $this->load->model('Authentication_model');
         $this->load->library('form_validation');
-
         $this->form_validation->set_message('required', _l('form_validation_required'));
         $this->form_validation->set_message('valid_email', _l('form_validation_valid_email'));
         $this->form_validation->set_message('matches', _l('form_validation_matches'));
@@ -25,6 +24,7 @@ class Authentication extends App_Controller
 
     public function index()
     {
+
         $this->admin();
     }
 
@@ -83,9 +83,11 @@ class Authentication extends App_Controller
                 
                 
                 // is logged in
+                
                 maybe_redirect_to_previous_url();
 
                 hooks()->do_action('after_staff_login');
+                
                 if(is_admin()){
                     redirect('branches');
                 }

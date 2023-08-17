@@ -257,6 +257,7 @@ function is_admin($staffid = '')
     /**
      * Checking for current user?
      */
+    
     if (!is_numeric($staffid)) {
         if (isset($GLOBALS['current_user'])) {
             return $GLOBALS['current_user']->admin === '1';

@@ -209,6 +209,7 @@ class Knowledge_base_model extends App_Model
      */
     public function get_kbg($id = '', $active = '')
     {
+        $bid= get_current_branch();
         if (is_numeric($active)) {
             $this->db->where('active', $active);
         }
@@ -217,6 +218,7 @@ class Knowledge_base_model extends App_Model
 
             return $this->db->get(db_prefix() . 'knowledge_base_groups')->row();
         }
+        $this->db->where('branch_id', $bid);
         $this->db->order_by('group_order', 'asc');
 
         return $this->db->get(db_prefix() . 'knowledge_base_groups')->result_array();

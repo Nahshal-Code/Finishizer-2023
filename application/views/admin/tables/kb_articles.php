@@ -21,7 +21,10 @@ $join = [
     'LEFT JOIN ' . db_prefix() . 'knowledge_base_groups ON ' . db_prefix() . 'knowledge_base_groups.groupid = ' . db_prefix() . 'knowledge_base.articlegroup',
     ];
 
-$where   = [];
+$bid = get_current_branch();
+$swhere = [
+    'AND branch_id=' . $bid ,
+    ];
 $filter  = [];
 $groups  = $this->ci->knowledge_base_model->get_kbg();
 $_groups = [];
@@ -41,7 +44,7 @@ if (!has_permission('knowledge_base', '', 'create') && !has_permission('knowledg
     array_push($where, ' AND ' . db_prefix() . 'knowledge_base.active=1');
 }
 
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, $additionalSelect);
+$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $swhere, $additionalSelect);
 $output  = $result['output'];
 $rResult = $result['rResult'];
 

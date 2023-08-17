@@ -30,6 +30,8 @@ class Departments_model extends App_Model
         $departments = $this->app_object_cache->get('departments');
 
         if (!$departments && !is_array($departments)) {
+            $bid = get_current_branch();
+            $this->db->where('branch_id', $bid);
             $departments = $this->db->get(db_prefix() . 'departments')->result_array();
             $this->app_object_cache->add('departments', $departments);
         }

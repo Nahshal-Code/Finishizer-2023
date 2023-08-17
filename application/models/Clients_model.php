@@ -47,6 +47,8 @@ class Clients_model extends App_Model
             return $client;
         }
 
+        $bid = get_current_branch();
+        $this->db->where(db_prefix() . 'clients.branch_id', $bid);
         $this->db->order_by('company', 'asc');
 
         return $this->db->get(db_prefix() . 'clients')->result_array();
