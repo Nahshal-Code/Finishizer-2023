@@ -167,7 +167,8 @@ class Estimate_request extends AdminController
         }
 
         $data['statuses'] = $this->estimate_request_model->get_status();
-        $data['members']  = $this->staff_model->get('', ['active' => 1, 'is_not_staff' => 0, ]);
+        
+        $data['members']  = $this->staff_model->get('', ['active' => 1, 'is_not_staff' => 0,]);
         $data['title']    = _l('estimate_request');
         $this->load->view('admin/estimate_request/estimate_request', $data);
     }
@@ -383,10 +384,11 @@ class Estimate_request extends AdminController
             $data['title']    = $data['form']->name . ' - ' . _l('estimate_request_form');
             $data['formData'] = $data['form']->form_data;
         }
-
+        $bid = get_current_branch();
         $data['members'] = $this->staff_model->get('', [
             'active'       => 1,
             'is_not_staff' => 0,
+            'branch_id' => $bid,
         ]);
 
         $data['roles']     = $this->roles_model->get();

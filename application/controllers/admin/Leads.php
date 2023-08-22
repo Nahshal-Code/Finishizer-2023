@@ -747,13 +747,14 @@ class Leads extends AdminController
 
     public function form($id = '')
     {
+        $bid = get_current_branch();
         if (!is_admin()) {
             access_denied('Web To Lead Access');
         }
         if ($this->input->post()) {
             if ($id == '') {
                 $data = $this->input->post();
-                $data['branch_id']=$this->session->userdata('selectedbranch_id');
+                $data['branch_id']=$bid;
                 $id   = $this->leads_model->add_form($data);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('web_to_lead_form')));
@@ -790,6 +791,7 @@ class Leads extends AdminController
         $data['members'] = $this->staff_model->get('', [
             'active'       => 1,
             'is_not_staff' => 0,
+            'branch_id'    => $bid,
         ]);
 
         $data['languages'] = $this->app->get_available_languages();

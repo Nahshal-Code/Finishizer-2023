@@ -89,6 +89,7 @@ function get_leads_summary()
     if (!class_exists('leads_model')) {
         $CI->load->model('leads_model');
     }
+    $bid= get_current_branch();
     $statuses = $CI->leads_model->get_status();
 
     $totalStatuses         = count($statuses);
@@ -123,6 +124,10 @@ function get_leads_summary()
         if (!$has_permission_view) {
             $sql .= ' AND ' . $whereNoViewPermission;
         }
+        if($bid){
+            $sql .= ' AND branch_id=' . $bid;
+        }
+        
         $sql .= ' UNION ALL ';
         $sql = trim($sql);
     }

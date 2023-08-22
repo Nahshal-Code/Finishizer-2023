@@ -21,7 +21,10 @@ $aColumns = [
 $sIndexColumn = 'id';
 $sTable       = db_prefix() . 'tasks';
 
-$where = [];
+$bid = get_current_branch();
+$where = [
+    'AND tblstaff.branch_id=' . $bid ,
+];
 $join  = [];
 
 include_once(APPPATH . 'views/admin/tables/includes/tasks_filter.php');

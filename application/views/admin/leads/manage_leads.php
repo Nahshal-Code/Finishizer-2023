@@ -317,7 +317,9 @@
                               foreach ($_table_data as $_t) {
                                   array_push($table_data, $_t);
                               }
-                              $custom_fields = get_custom_fields('leads', ['show_on_table' => 1]);
+                             
+                              $bid = get_current_branch();
+                              $custom_fields = get_custom_fields('leads', ['show_on_table' => 1,'branch_id'=> $bid]);
                               foreach ($custom_fields as $field) {
                                   array_push($table_data, [
                                    'name'     => $field['name'],

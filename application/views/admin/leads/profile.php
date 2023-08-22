@@ -290,7 +290,8 @@
                 </dl>
             </div>
             <div class="col-md-4 col-xs-12 lead-information-col">
-                <?php if (total_rows(db_prefix() . 'customfields', ['fieldto' => 'leads', 'active' => 1]) > 0 && isset($lead)) { ?>
+                <?php $bid = get_current_branch();
+                if (total_rows(db_prefix() . 'customfields', ['fieldto' => 'leads','branch_id' =>$bid, 'active' => 1]) > 0 && isset($lead)) { ?>
                 <div class="lead-info-heading">
                     <h4>
                         <?php echo _l('custom_fields'); ?>
@@ -298,7 +299,7 @@
                 </div>
                 <dl>
                     <?php
-            $custom_fields = get_custom_fields('leads');
+            $custom_fields = get_custom_fields('leads',['branch_id' => $bid]);
             foreach ($custom_fields as $field) {
                 $value = get_custom_field_value($lead->id, $field['id'], 'leads'); ?>
                     <dt class="lead-field-heading tw-font-medium tw-text-neutral-500 no-mtop">

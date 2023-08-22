@@ -3,9 +3,10 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 $has_permission_delete = has_permission('staff', '', 'delete');
-
+$bid = get_current_branch();
 $custom_fields = get_custom_fields('staff', [
     'show_on_table' => 1,
+    'branch_id' => $bid,
     ]);
 $aColumns = [
     'firstname',
@@ -33,7 +34,7 @@ if (count($custom_fields) > 4) {
 }
 
 //$where = hooks()->apply_filters('staff_table_sql_where', []);
-$bid = get_current_branch();
+
 $where = [
     'AND tblstaff.branch_id=' . $bid ,
     ];

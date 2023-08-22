@@ -23,7 +23,8 @@
                             _l('staff_dt_last_Login'),
                             _l('staff_dt_active'),
                         ];
-                        $custom_fields = get_custom_fields('staff', ['show_on_table' => 1]);
+                        $bid = get_current_branch();
+                        $custom_fields = get_custom_fields('staff', ['show_on_table' => 1,'branch_id' => $bid]);
                         foreach ($custom_fields as $field) {
                             array_push($table_data, [
                                 'name'     => $field['name'],
