@@ -427,13 +427,14 @@ function tasks_summary_data($rel_id = null, $rel_type = null)
 {
     $CI            = &get_instance();
     $tasks_summary = [];
+    $bid = get_current_branch();
     $statuses      = $CI->tasks_model->get_statuses();
     foreach ($statuses as $status) {
-        $tasks_where = 'status = ' . $CI->db->escape_str($status['id']);
+        $tasks_where = 'status = ' . $CI->db->escape_str($status['id']).' AND branch_id = '.$CI->db->escape_str($bid);
         if (!has_permission('tasks', '', 'view')) {
             $tasks_where .= ' ' . get_tasks_where_string();
         }
-        $tasks_my_where = 'id IN(SELECT taskid FROM ' . db_prefix() . 'task_assigned WHERE staffid=' . get_staff_user_id() . ') AND status=' . $CI->db->escape_str($status['id']);
+        $tasks_my_where = 'id IN(SELECT taskid FROM ' . db_prefix() . 'task_assigned WHERE staffid=' . get_staff_user_id() . ') AND status=' . $CI->db->escape_str($status['id']).' AND branch_id = '.$CI->db->escape_str($bid);
         if ($rel_id && $rel_type) {
             $tasks_where .= ' AND rel_id=' . $CI->db->escape_str($rel_id) . ' AND rel_type="' . $CI->db->escape_str($rel_type) . '"';
             $tasks_my_where .= ' AND rel_id=' . $CI->db->escape_str($rel_id) . ' AND rel_type="' . $CI->db->escape_str($rel_type) . '"';
@@ -446,6 +447,7 @@ function tasks_summary_data($rel_id = null, $rel_type = null)
             $tasks_where .= $sqlProjectTasksWhere;
             $tasks_my_where .= $sqlProjectTasksWhere;
         }
+        
 
         $summary                   = [];
         $summary['total_tasks']    = total_rows(db_prefix() . 'tasks', $tasks_where);

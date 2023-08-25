@@ -20,9 +20,10 @@ array_unshift($table_data, [
     'name'     => '<span class="hide"> - </span><div class="checkbox mass_select_all_wrap"><input type="checkbox" id="mass_select_all" data-to-table="tasks"><label></label></div>',
     'th_attrs' => ['class' => (isset($bulk_actions) ? '' : 'not_visible')],
 ]);
-
+$bid = get_current_branch();
 $custom_fields = get_custom_fields('tasks', [
     'show_on_table' => 1,
+    'branch_id' => $bid,
 ]);
 
 foreach ($custom_fields as $field) {

@@ -255,7 +255,8 @@ class Tasks extends AdminController
             if ($status) {
                 $this->db->where('status', $status);
             }
-
+            $bid = get_current_branch();
+            $this->db->where('branch_id', $bid);
             $this->db->order_by($fetch_month_from, 'ASC');
             array_push($overview, $m);
             $overview[$m] = $this->db->get(db_prefix() . 'tasks')->result_array();
@@ -267,8 +268,8 @@ class Tasks extends AdminController
             'staff_id' => $staff_id,
             'detailed' => $overview,
         ];
-
-        $data['members']  = $this->staff_model->get();
+        
+        $data['members']  = $this->staff_model->get('',['branch_id' => $bid]);
         $data['overview'] = $overview['detailed'];
         $data['years']    = $this->tasks_model->get_distinct_tasks_years(($this->input->post('month_from') ? $this->input->post('month_from') : 'startdate'));
         $data['staff_id'] = $overview['staff_id'];

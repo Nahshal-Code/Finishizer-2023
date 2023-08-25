@@ -23,7 +23,7 @@ $sTable       = db_prefix() . 'tasks';
 
 $bid = get_current_branch();
 $where = [
-    'AND tblstaff.branch_id=' . $bid ,
+    'AND branch_id=' . $bid ,'OR branch_id=0',
 ];
 $join  = [];
 

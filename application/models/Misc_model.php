@@ -973,10 +973,12 @@ class Misc_model extends App_Model
                     AND ' . db_prefix() . 'taggables.rel_type=\'ticket\' GROUP BY rel_id HAVING COUNT(tag_id) = 1)
                     ');
             }
-
+            $bid = get_current_branch();
+            $this->db->where(db_prefix() . 'tickets.branch_id',$bid);
             if ($limit != 0) {
                 $this->db->limit($limit);
             }
+
             $this->db->order_by('ticketid', 'DESC');
             $result['result'] = $this->db->get()->result_array();
         }
