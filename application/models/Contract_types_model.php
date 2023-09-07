@@ -60,6 +60,8 @@ class Contract_types_model extends App_Model
         $types = $this->app_object_cache->get('contract-types');
 
         if (!$types && !is_array($types)) {
+            $bid = get_current_branch();
+            $this->db->where('branch_id', $bid);
             $types = $this->db->get(db_prefix().'contracts_types')->result_array();
             $this->app_object_cache->add('contract-types', $types);
         }

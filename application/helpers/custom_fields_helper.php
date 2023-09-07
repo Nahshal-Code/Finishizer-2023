@@ -542,8 +542,9 @@ function render_custom_fields_items_table_in($item, $part_item_name)
  * @since Version 1.0.4
  * @return array
  */
-function get_company_custom_fields($bid='null')
+function get_company_custom_fields()
 {
+    $bid = get_current_branch();
     $fields = get_custom_fields('company','branch_id=' . $bid );
     $i      = 0;
     foreach ($fields as $field) {

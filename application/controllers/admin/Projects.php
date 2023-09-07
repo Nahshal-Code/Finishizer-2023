@@ -125,7 +125,8 @@ class Projects extends AdminController
 
         $data['settings'] = $this->projects_model->get_settings();
         $data['statuses'] = $this->projects_model->get_project_statuses();
-        $data['staff']    = $this->staff_model->get('', ['active' => 1]);
+        $bid = get_current_branch();
+        $data['staff']    = $this->staff_model->get('', ['active' => 1,'branch_id'=>$bid]);
 
         $data['title'] = $title;
         $this->load->view('admin/projects/project', $data);
@@ -215,8 +216,8 @@ class Projects extends AdminController
             $data['currency'] = $this->projects_model->get_currency($id);
 
             $data['project_total_logged_time'] = $this->projects_model->total_logged_time($id);
-
-            $data['staff']   = $this->staff_model->get('', ['active' => 1]);
+            $bid = get_current_branch();
+            $data['staff']   = $this->staff_model->get('', ['active' => 1,'branch_id'=>$bid]);
             $percent         = $this->projects_model->calc_progress($id);
             $data['members'] = $this->projects_model->get_project_members($id);
             foreach ($data['members'] as $key => $member) {
@@ -378,6 +379,8 @@ class Projects extends AdminController
             if (!staff_can('view', 'projects')) {
                 $other_projects_where .= ' AND ' . db_prefix() . 'projects.id IN (SELECT project_id FROM ' . db_prefix() . 'project_members WHERE staff_id=' . get_staff_user_id() . ')';
             }
+            $bid = get_current_branch();
+            $other_projects_where .= ' AND ' . db_prefix() . 'clients.branch_id = '.$bid;
 
             $data['other_projects'] = $this->projects_model->get('', $other_projects_where);
             $data['title']          = $data['project']->name;

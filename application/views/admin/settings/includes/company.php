@@ -26,7 +26,7 @@
         <a href="#" class="settings-textarea-merge-field" data-to="company_info_format">{vat_number}</a>,
         <a href="#" class="settings-textarea-merge-field" data-to="company_info_format">{vat_number_with_label}</a>
     </p>
-    <?php $custom_company_fields = get_company_custom_fields($bid);
+    <?php $custom_company_fields = get_company_custom_fields();
     if (count($custom_company_fields) > 0) {
         echo '<hr />';
         echo '<p class="font-medium"><b>' . _l('custom_fields') . '</b></p>';

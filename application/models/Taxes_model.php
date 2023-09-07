@@ -21,6 +21,7 @@ class Taxes_model extends App_Model
 
             return $this->db->get(db_prefix() . 'taxes')->row();
         }
+        $this->db->where('branch_id', get_current_branch());
         $this->db->order_by('taxrate', 'ASC');
 
         return $this->db->get(db_prefix() . 'taxes')->result_array();

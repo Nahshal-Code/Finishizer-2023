@@ -985,11 +985,12 @@ class Clients extends ClientsController
                 // Fix for custom fields checkboxes validation
                 $this->form_validation->set_rules('company_form', '', 'required');
             }
-
+            $bid = get_current_branch();
             $custom_fields = get_custom_fields('customers', [
                 'show_on_client_portal'  => 1,
                 'required'               => 1,
                 'disalow_client_to_edit' => 0,
+                'branch_id' => $bid,
             ]);
 
             foreach ($custom_fields as $field) {

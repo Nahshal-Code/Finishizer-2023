@@ -21,7 +21,10 @@ $aColumns = [
 
 $sIndexColumn = 'userid';
 $sTable       = db_prefix() . 'clients';
-$where        = [];
+$bid = get_current_branch();
+$where        = [
+    'AND' . db_prefix() . 'clients.branch_id=' . $bid ,
+];
 // Add blank where all filter can be stored
 $filter = [];
 

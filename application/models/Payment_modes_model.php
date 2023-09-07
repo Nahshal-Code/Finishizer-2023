@@ -80,7 +80,7 @@ class Payment_modes_model extends App_Model
         if ($include_inactive !== true) {
             $this->db->where('active', 1);
         }
-
+        $this->db->where('branch_id', get_current_branch());
         $modes = $this->db->get(db_prefix() . 'payment_modes')->result_array();
         $modes = array_merge($modes, $this->get_payment_gateways($include_inactive));
 

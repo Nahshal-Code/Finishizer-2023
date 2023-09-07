@@ -325,3 +325,20 @@ ERROR - 2023-08-25 19:13:26 --> Severity: error --> Exception: syntax error, une
 ERROR - 2023-08-25 19:13:27 --> Severity: error --> Exception: syntax error, unexpected 'static' (T_STATIC) C:\xampp\htdocs\finishizer_erp3.0.5\application\services\leads\LeadsKanban.php 29
 ERROR - 2023-08-25 19:13:28 --> Severity: error --> Exception: syntax error, unexpected 'static' (T_STATIC) C:\xampp\htdocs\finishizer_erp3.0.5\application\services\leads\LeadsKanban.php 29
 ERROR - 2023-08-25 19:13:40 --> Severity: error --> Exception: syntax error, unexpected 'static' (T_STATIC) C:\xampp\htdocs\finishizer_erp3.0.5\application\services\leads\LeadsKanban.php 29
+ERROR - 2023-08-25 21:10:12 --> Severity: error --> Exception: syntax error, unexpected 'static' (T_STATIC) C:\xampp\htdocs\finishizer_erp3.0.5\application\services\leads\LeadsKanban.php 29
+ERROR - 2023-08-25 21:47:52 --> Query error: Unknown column 'null' in 'where clause' - Invalid query: SELECT *
+FROM `tblcustomfields`
+WHERE `fieldto` = 'company'
+AND `branch_id` = `null`
+AND `active` = 1
+ORDER BY `field_order` ASC
+ERROR - 2023-08-25 21:50:40 --> Query error: Unknown column 'null' in 'where clause' - Invalid query: SELECT *
+FROM `tblcustomfields`
+WHERE `fieldto` = 'company'
+AND `branch_id` = `null`
+AND `active` = 1
+ORDER BY `field_order` ASC
+ERROR - 2023-08-25 21:54:55 --> Severity: Notice --> Undefined variable: categories C:\xampp\htdocs\finishizer_erp3.0.5\application\views\admin\expenses\_bulk_actions_modal.php 21
+ERROR - 2023-08-25 21:54:55 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\finishizer_erp3.0.5\application\helpers\fields_helper.php 334
+ERROR - 2023-08-25 21:54:55 --> Severity: Notice --> Undefined variable: payment_modes C:\xampp\htdocs\finishizer_erp3.0.5\application\views\admin\expenses\_bulk_actions_modal.php 23
+ERROR - 2023-08-25 21:54:55 --> Severity: Warning --> Invalid argument supplied for foreach() C:\xampp\htdocs\finishizer_erp3.0.5\application\helpers\fields_helper.php 334

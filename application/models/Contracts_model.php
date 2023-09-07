@@ -738,15 +738,17 @@ class Contracts_model extends App_Model
         if ($staffId && ! staff_can('view', 'contracts', $staffId)) {
             $this->db->where('addedfrom', $staffId);
         }
-
-        $this->db->select('id,subject,client,datestart,dateend');
-
+        $bid = get_current_branch();
+        $this->db->select('id,subject,client,datestart,dateend,branch_id');
+        $this->db->where('branch_id', $bid);
         $this->db->where('dateend IS NOT NULL');
         $this->db->where('trash', 0);
         $this->db->where('dateend >=', $diff1);
         $this->db->where('dateend <=', $diff2);
+        $this->db->from(db_prefix() . 'contracts');
+        $this->db->join(db_prefix() . 'clients', db_prefix() . 'contracts.client='. db_prefix() . 'clients.userid');
 
-        return $this->db->get(db_prefix() . 'contracts')->result_array();
+        return $this->db->get()->result_array();
     }
 
     /**

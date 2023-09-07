@@ -20,7 +20,10 @@ $aColumns = array_merge($aColumns, [
 
 $sIndexColumn = 'id';
 $sTable       = db_prefix() . 'items';
-
+$bid = get_current_branch();
+$where = [
+    'AND '. db_prefix() . 'items.branch_id=' . $bid ,
+    ];
 $join = [
     'LEFT JOIN ' . db_prefix() . 'taxes t1 ON t1.id = ' . db_prefix() . 'items.tax',
     'LEFT JOIN ' . db_prefix() . 'taxes t2 ON t2.id = ' . db_prefix() . 'items.tax2',
@@ -35,7 +38,7 @@ $additionalSelect = [
     'group_id',
     ];
 
-$custom_fields = get_custom_fields('items');
+$custom_fields = get_custom_fields('items',['branch_id' => $bid]);
 
 foreach ($custom_fields as $key => $field) {
     $selectAs = (is_cf_date($field) ? 'date_picker_cvalue_' . $key : 'cvalue_' . $key);
@@ -50,7 +53,7 @@ if (count($custom_fields) > 4) {
     @$this->ci->db->query('SET SQL_BIG_SELECTS=1');
 }
 
-$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, [], $additionalSelect);
+$result  = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, $additionalSelect);
 $output  = $result['output'];
 $rResult = $result['rResult'];
 

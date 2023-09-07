@@ -78,7 +78,7 @@
       _l('unit'),
       _l('item_group_name'), ]);
 
-    $cf = get_custom_fields('items');
+    $cf = get_custom_fields('items',['branch_id' => get_current_branch()]);
     foreach ($cf as $custom_field) {
         array_push($table_data, [
        'name'     => $custom_field['name'],

@@ -52,6 +52,8 @@ class Client_groups_model extends App_Model
 
             return $this->db->get(db_prefix().'customers_groups')->row();
         }
+        $bid = get_current_branch();
+        $this->db->where('branch_id', $bid);
         $this->db->order_by('name', 'asc');
 
         return $this->db->get(db_prefix().'customers_groups')->result_array();

@@ -261,6 +261,7 @@ class Expenses_model extends App_Model
 
                     break;
             }
+            $this->db->where('branch_id', get_current_branch());
             $all_expenses = $this->db->get(db_prefix() . 'expenses')->result_array();
             $_total_all   = [];
             $cached_taxes = [];

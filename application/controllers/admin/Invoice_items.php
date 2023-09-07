@@ -46,6 +46,7 @@ class Invoice_items extends AdminController
         if (has_permission('items', '', 'view')) {
             if ($this->input->post()) {
                 $data = $this->input->post();
+                $data['branch_id'] = get_current_branch();
                 if ($data['itemid'] == '') {
                     if (!has_permission('items', '', 'create')) {
                         header('HTTP/1.0 400 Bad error');
@@ -122,7 +123,9 @@ class Invoice_items extends AdminController
     public function add_group()
     {
         if ($this->input->post() && has_permission('items', '', 'create')) {
-            $this->invoice_items_model->add_group($this->input->post());
+            $data = $this->input->post();
+            $data['branch_id'] = get_current_branch();
+            $this->invoice_items_model->add_group($data);
             set_alert('success', _l('added_successfully', _l('item_group')));
         }
     }

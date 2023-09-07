@@ -32,8 +32,6 @@
                         </div>
                         <div class="tab-content tw-mt-3">
                             <div role="tabpanel" class="tab-pane active" id="tab_project">
-
-
                                 <?php
                         $disable_type_edit = '';
                         if (isset($project)) {

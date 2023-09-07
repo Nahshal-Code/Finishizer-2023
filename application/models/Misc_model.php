@@ -1132,7 +1132,7 @@ class Misc_model extends App_Model
         }
 
         $bid = get_current_branch();
-        $this->db->where('tblprojects.branch_id',$bid);
+        $this->db->where('tblclients.branch_id',$bid);
 
         if ($limit != 0) {
             $this->db->limit($limit);

@@ -87,7 +87,7 @@ class Clients extends AdminController
                 }
 
                 $data = $this->input->post();
-
+                $data['branch_id'] = get_current_branch();
                 $save_and_add_contact = false;
                 if (isset($data['save_and_add_contact'])) {
                     unset($data['save_and_add_contact']);

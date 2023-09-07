@@ -24,8 +24,10 @@ $sTable       = db_prefix() . 'projects';
 $join = [
     'JOIN ' . db_prefix() . 'clients ON ' . db_prefix() . 'clients.userid = ' . db_prefix() . 'projects.clientid',
 ];
-
-$where  = [];
+$bid = get_current_branch();
+$where  = [
+    'AND' . db_prefix() . 'clients.branch_id=' . $bid ,
+];
 $filter = [];
 
 if ($clientid != '') {

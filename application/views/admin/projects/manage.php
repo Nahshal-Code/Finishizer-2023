@@ -75,9 +75,10 @@
                                 </h4>
 
                                 <?php
-                  $_where = '';
+                                
+                                $_where = 'clientid IN (SELECT userid FROM ' . db_prefix() . 'clients WHERE branch_id=' . get_current_branch() . ')';
                   if (!has_permission('projects', '', 'view')) {
-                      $_where = 'id IN (SELECT project_id FROM ' . db_prefix() . 'project_members WHERE staff_id=' . get_staff_user_id() . ')';
+                      $_where = 'AND id IN (SELECT project_id FROM ' . db_prefix() . 'project_members WHERE staff_id=' . get_staff_user_id() . ')';
                   }
                   ?>
                             </div>

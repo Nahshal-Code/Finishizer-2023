@@ -58,7 +58,9 @@ class Expenses extends AdminController
                     ]);
                     die;
                 }
-                $id = $this->expenses_model->add($this->input->post());
+                $newdata = $this->input->post();
+                $newdata['branch_id'] = get_current_branch();
+                $id = $this->expenses_model->add($newdata);
                 if ($id) {
                     set_alert('success', _l('added_successfully', _l('expense')));
                     echo json_encode([

@@ -35,7 +35,7 @@ $table_data = array_merge($table_data, [
   _l('expense_dt_table_heading_payment_mode'),
 ]);
 
-$custom_fields = get_custom_fields('expenses', ['show_on_table' => 1]);
+$custom_fields = get_custom_fields('expenses', ['show_on_table' => 1,'branch_id' => get_current_branch()]);
 
 foreach ($custom_fields as $field) {
     array_push($table_data, [

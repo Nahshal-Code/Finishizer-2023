@@ -306,7 +306,7 @@
                                             onclick="get_templates('contracts', <?php echo $contract->id ?>); return false"
                                             aria-controls="tab_templates" role="tab" data-toggle="tab">
                                             <?php echo _l('templates');
-                                            $conditions = ['type' => 'contracts'];
+                                            $conditions = ['type' => 'contracts','branch_id' => get_current_branch()];
                                             if (!staff_can('view_all_templates', 'contracts')) {
                                                 $conditions['addedfrom'] = get_staff_user_id();
                                                 $conditions['type']      = 'contracts';

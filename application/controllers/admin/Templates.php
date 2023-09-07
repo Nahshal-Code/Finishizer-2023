@@ -51,7 +51,7 @@ class Templates extends AdminController
         $data['rel_type'] = $this->input->post('rel_type');
         $data['rel_id']   = $this->input->post('rel_id');
 
-        $where = [];
+        $where['branch_id'] = get_current_branch();
 
         if (!staff_can('view_all_templates', $data['rel_type'])) {
             $where['addedfrom'] = get_staff_user_id();
@@ -84,6 +84,7 @@ class Templates extends AdminController
         $content = html_purify($content);
 
         $data['name']      = $this->input->post('name');
+        $data['branch_id']      = get_current_branch();
         $data['content']   = $content;
         $data['addedfrom'] = get_staff_user_id();
         $data['type']      = $this->input->post('rel_type');

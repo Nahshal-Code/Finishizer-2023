@@ -296,6 +296,7 @@ class Invoice_items_model extends App_Model
 
     public function get_groups()
     {
+        $this->db->where('branch_id', get_current_branch());
         $this->db->order_by('name', 'asc');
 
         return $this->db->get(db_prefix() . 'items_groups')->result_array();

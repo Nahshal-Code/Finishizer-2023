@@ -28,6 +28,10 @@ class Currencies_model extends App_Model
         $currencies = $this->app_object_cache->get('currencies-data');
 
         if (!$currencies && !is_array($currencies)) {
+            $bid = get_current_branch();
+            $this->db->where('branch_id', $bid);
+            $this->db->or_where('branch_id', 0);
+            
             $currencies = $this->db->get(db_prefix() . 'currencies')->result_array();
             $this->app_object_cache->add('currencies-data', $currencies);
         }

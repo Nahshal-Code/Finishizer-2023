@@ -309,8 +309,10 @@ function init_relation_tasks_table($table_attributes = [])
         'th_attrs' => ['class' => ($table_attributes['data-new-rel-type'] !== 'project' ? 'not_visible' : '')],
     ]);
 
+    $bid = get_current_branch();
     $custom_fields = get_custom_fields('tasks', [
         'show_on_table' => 1,
+        'branch_id' => $bid,
     ]);
 
     foreach ($custom_fields as $field) {
