@@ -88,8 +88,8 @@ class Authentication extends App_Controller
 
                 hooks()->do_action('after_staff_login');
                 
-                if(is_admin()){
-                    redirect('branches');
+                if(1){
+                    redirect('admin/branches');
                 }
                 else{
                     redirect(admin_url());

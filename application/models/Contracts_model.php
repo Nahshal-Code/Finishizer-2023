@@ -739,8 +739,10 @@ class Contracts_model extends App_Model
             $this->db->where('addedfrom', $staffId);
         }
         $bid = get_current_branch();
-        $this->db->select('id,subject,client,datestart,dateend,branch_id');
-        $this->db->where('branch_id', $bid);
+        $this->db->select('id,subject,client,datestart,dateend', db_prefix() . 'clients.branch_id');
+        if($bid){
+            $this->db->where('tblclients.branch_id', $bid);
+        }
         $this->db->where('dateend IS NOT NULL');
         $this->db->where('trash', 0);
         $this->db->where('dateend >=', $diff1);
