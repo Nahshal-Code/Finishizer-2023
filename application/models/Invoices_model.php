@@ -59,8 +59,10 @@ class Invoices_model extends App_Model
         }
         $this->db->select(db_prefix() . 'invoices.*,' . get_sql_select_client_company());
         $this->db->join(db_prefix() . 'clients', db_prefix() . 'invoices.clientid=' . db_prefix() . 'clients.userid', 'left');
+       
         $this->db->where_not_in('status', [self::STATUS_CANCELLED, self::STATUS_PAID]);
         $this->db->where('total >', 0);
+        $this->db->where(db_prefix() . 'clients.branch_id', get_current_branch());
         $this->db->order_by('number,YEAR(date)', 'desc');
         $invoices = $this->db->get(db_prefix() . 'invoices')->result();
 

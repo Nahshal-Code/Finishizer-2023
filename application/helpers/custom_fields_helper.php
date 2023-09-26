@@ -22,12 +22,13 @@ function render_custom_fields($belongs_to, $rel_id = false,$where = [], $items_c
 
     // Is this custom fields for predefined items Sales->Items
     $items_pr = isset($items_cf_params['items_pr']) && $items_cf_params['items_pr'] ? true : false;
-
+    $bid = get_current_branch();
     $is_admin = is_admin();
 
     $CI = & get_instance();
     $CI->db->where('active', 1);
     $CI->db->where('fieldto', $belongs_to);
+    $CI->db->where('branch_id', $bid);
     
     if (is_array($where) && count($where) > 0 || is_string($where) && $where != '') {
         $CI->db->where($where[0]);

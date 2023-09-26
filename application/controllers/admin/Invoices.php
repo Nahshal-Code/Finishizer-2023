@@ -399,8 +399,8 @@ class Invoices extends AdminController
         $data['currencies'] = $this->currencies_model->get();
 
         $data['base_currency'] = $this->currencies_model->get_base_currency();
-
-        $data['staff']     = $this->staff_model->get('', ['active' => 1]);
+        $bid = get_current_branch();
+        $data['staff']     = $this->staff_model->get('', ['active' => 1,'branch_id' => $bid]);
         $data['title']     = $title;
         $data['bodyclass'] = 'invoice';
         $this->load->view('admin/invoices/invoice', $data);

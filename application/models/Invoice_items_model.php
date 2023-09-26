@@ -106,6 +106,7 @@ class Invoice_items_model extends App_Model
     {
         $items = [];
         $this->db->order_by('name', 'asc');
+        $this->db->where('branch_id', get_current_branch());
         $groups = $this->db->get(db_prefix() . 'items_groups')->result_array();
 
         array_unshift($groups, [
@@ -256,9 +257,13 @@ class Invoice_items_model extends App_Model
 
     public function search($q)
     {
+        
         $this->db->select('rate, id, description as name, long_description as subtext');
+       
         $this->db->like('description', $q);
         $this->db->or_like('long_description', $q);
+        
+
 
         $items = $this->db->get(db_prefix() . 'items')->result_array();
 

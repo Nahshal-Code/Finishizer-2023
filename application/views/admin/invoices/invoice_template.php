@@ -574,7 +574,7 @@
                             <?php echo _l('invoice_table_item_heading'); ?></th>
                         <th width="25%" align="left"><?php echo _l('invoice_table_item_description'); ?></th>
                         <?php
-                  $custom_fields = get_custom_fields('items');
+                  $custom_fields = get_custom_fields('items',['branch_id'=> $bid]);
                   foreach ($custom_fields as $cf) {
                       echo '<th width="15%" align="left" class="custom_field">' . $cf['name'] . '</th>';
                   }
