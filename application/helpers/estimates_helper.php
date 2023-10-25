@@ -286,6 +286,7 @@ function get_estimates_percent_by_status($status, $project_id = null)
     if (!$has_permission_view) {
         $where .= get_estimates_where_sql_for_staff(get_staff_user_id());
     }
+    $where .= 'clientid IN (SELECT userid FROM ' . db_prefix() . 'clients WHERE branch_id=' . get_current_branch() . ') ';
 
     $where = trim($where);
 

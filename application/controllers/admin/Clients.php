@@ -42,6 +42,8 @@ class Clients extends AdminController
 
         $data['countries'] = $this->clients_model->get_clients_distinct_countries();
 
+        $data['br_clients'] = $this->clients_model->clients_in_branch();
+
         $this->load->view('admin/clients/manage', $data);
     }
 
@@ -202,7 +204,7 @@ class Clients extends AdminController
                 }
             }
 
-            $data['staff'] = $this->staff_model->get('', ['active' => 1]);
+            $data['staff'] = $this->staff_model->get('', ['active' => 1,'branch_id' => get_current_branch()]);
 
             $data['client'] = $client;
             $title          = $client->company;
@@ -1084,4 +1086,6 @@ class Clients extends AdminController
 
         echo json_encode($viewData);
     }
+
+   
 }

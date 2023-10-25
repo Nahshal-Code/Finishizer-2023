@@ -136,6 +136,7 @@ class Proposals extends AdminController
     {
         if ($this->input->post()) {
             $proposal_data = $this->input->post();
+            $proposal_data['branch_id']=get_current_branch();
             if ($id == '') {
                 if (!has_permission('proposals', '', 'create')) {
                     access_denied('proposals');
@@ -191,7 +192,7 @@ class Proposals extends AdminController
         $data['items_groups'] = $this->invoice_items_model->get_groups();
 
         $data['statuses']      = $this->proposals_model->get_statuses();
-        $data['staff']         = $this->staff_model->get('', ['active' => 1]);
+        $data['staff']         = $this->staff_model->get('', ['active' => 1,'branch_id' =>get_current_branch()]);
         $data['currencies']    = $this->currencies_model->get();
         $data['base_currency'] = $this->currencies_model->get_base_currency();
 

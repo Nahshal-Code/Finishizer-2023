@@ -184,9 +184,8 @@ function count_active_contracts($staffId = null)
     }
     
     return total_rows(db_prefix() . 'contracts', 'client IN (SELECT userid FROM ' . db_prefix() . 'clients WHERE branch_id=' . get_current_branch() . ') 
-                                                AND (DATE(dateend) >"' . date('Y-m-d') . '" 
-                                                AND trash=0' . 
-                                                (count($where_own) > 0 ? ' AND addedfrom=' . $staffId : '') . ') OR (DATE(dateend) IS NULL AND trash=0' . (count($where_own) > 0 ? ' AND addedfrom=' . $staffId : '') . ')');
+                                                AND ((DATE(dateend) >"' . date('Y-m-d') . '" AND trash=0' . (count($where_own) > 0 ? ' AND addedfrom=' . $staffId : '') . ') 
+                                                OR (DATE(dateend) IS NULL AND trash=0' . (count($where_own) > 0 ? ' AND addedfrom=' . $staffId : '') . '))');
 }
 
 /**

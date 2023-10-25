@@ -135,7 +135,7 @@ class Reports extends AdminController
             $aColumns     = $select;
             $sIndexColumn = 'userid';
             $sTable       = db_prefix() . 'clients';
-            $where        = [];
+            $where        = ['AND '.db_prefix() . 'clients.branch_id = '.get_current_branch()];
 
             $result = data_tables_init($aColumns, $sIndexColumn, $sTable, [], $where, [
                 'userid',
@@ -186,7 +186,7 @@ class Reports extends AdminController
                 'amount',
             ];
             $where = [
-                'AND status != 5',
+                'AND status != 5 AND '. db_prefix() . 'clients.branch_id = '.get_current_branch(),
             ];
 
             $custom_date_select = $this->get_where_report_period(db_prefix() . 'invoicepaymentrecords.date');
@@ -310,7 +310,7 @@ class Reports extends AdminController
                     WHERE ' . db_prefix() . 'itemable.rel_type="proposal" AND taxname="' . $tax['taxname'] . '" AND taxrate="' . $tax['taxrate'] . '" AND ' . db_prefix() . 'itemable.rel_id=' . db_prefix() . 'proposals.id) as total_tax_single_' . $key);
             }
 
-            $where              = [];
+            $where              = ['AND '.db_prefix() . 'proposals.branch_id = '.get_current_branch()];
             $custom_date_select = $this->get_where_report_period();
             if ($custom_date_select != '') {
                 array_push($where, $custom_date_select);
@@ -477,7 +477,7 @@ class Reports extends AdminController
                     WHERE ' . db_prefix() . 'itemable.rel_type="estimate" AND taxname="' . $tax['taxname'] . '" AND taxrate="' . $tax['taxrate'] . '" AND ' . db_prefix() . 'itemable.rel_id=' . db_prefix() . 'estimates.id) as total_tax_single_' . $key);
             }
 
-            $where              = [];
+            $where              = ['AND '.db_prefix() .'clients.branch_id = '.get_current_branch()];
             $custom_date_select = $this->get_where_report_period();
             if ($custom_date_select != '') {
                 array_push($where, $custom_date_select);
@@ -684,8 +684,13 @@ class Reports extends AdminController
             $sIndexColumn = 'id';
             $sTable       = db_prefix() . 'itemable';
             $join         = ['JOIN ' . db_prefix() . 'invoices ON ' . db_prefix() . 'invoices.id = ' . db_prefix() . 'itemable.rel_id'];
-
-            $where = ['AND rel_type="invoice"', 'AND status != 5', 'AND status=2'];
+            $this->load->model('Clients_model');
+            $client_array = $this->Clients_model->clients_in_branch();
+            $where = [' AND rel_type="invoice"', 'AND status != 5', 'AND status=2'];
+            if(sizeof($client_array)>0){
+                $where = ['AND '. db_prefix() . 'invoices.clientid IN (' . implode(', ',$client_array). ')'];
+            }
+            
 
             $custom_date_select = $this->get_where_report_period();
             if ($custom_date_select != '') {
@@ -772,7 +777,7 @@ class Reports extends AdminController
                 'status',
             ];
 
-            $where = [];
+            $where = ['AND' . db_prefix() . 'clients.branch_id = '.get_current_branch()];
 
             $credit_note_taxes_select = array_reverse($credit_note_taxes);
 
@@ -1007,6 +1012,10 @@ class Reports extends AdminController
             $sTable       = db_prefix() . 'invoices';
             $join         = [
                 'LEFT JOIN ' . db_prefix() . 'clients ON ' . db_prefix() . 'clients.userid = ' . db_prefix() . 'invoices.clientid',
+            ];
+            $where=[                
+                'AND'.db_prefix() . 'clients.branch_id=' . get_current_branch() ,
+                    
             ];
 
             $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, [
@@ -1367,6 +1376,7 @@ class Reports extends AdminController
 
     private function distinct_taxes($rel_type)
     {
-        return $this->db->query('SELECT DISTINCT taxname,taxrate FROM ' . db_prefix() . "item_tax WHERE rel_type='" . $rel_type . "' ORDER BY taxname ASC")->result_array();
+        $bid = get_current_branch();
+        return $this->db->query('SELECT DISTINCT taxname,' . db_prefix() . 'item_tax.taxrate FROM ' . db_prefix() . 'item_tax LEFT JOIN ' . db_prefix() . 'taxes ON ' . db_prefix() . 'item_tax.taxname = ' . db_prefix() . 'taxes.name WHERE rel_type="' . $rel_type . '" AND ' . db_prefix() . 'taxes.branch_id = ' .$bid. ' ORDER BY taxname ASC')->result_array();
     }
 }

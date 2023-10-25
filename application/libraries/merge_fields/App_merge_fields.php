@@ -328,8 +328,8 @@ class App_merge_fields
 
                     break;
             }
-
-                $custom_fields = get_custom_fields($_key, [], true);
+            $bid=get_current_branch();
+                $custom_fields = get_custom_fields($_key, ['branch_id'=>$bid], true);
 
                 foreach ($custom_fields as $field) {
                     array_push($registered[$i][$key], [

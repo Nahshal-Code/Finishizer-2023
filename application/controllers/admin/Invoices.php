@@ -35,6 +35,7 @@ class Invoices extends AdminController
         $data['invoices_years']       = $this->invoices_model->get_invoices_years();
         $data['invoices_sale_agents'] = $this->invoices_model->get_sale_agents();
         $data['invoices_statuses']    = $this->invoices_model->get_statuses();
+        
         $data['bodyclass']            = 'invoices-total-manual';
         $this->load->view('admin/invoices/manage', $data);
     }

@@ -9,6 +9,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
  */
 function is_using_multiple_currencies($table = null)
 {
+    
     if (!$table) {
         $table = db_prefix() . 'invoices';
     }
@@ -19,7 +20,19 @@ function is_using_multiple_currencies($table = null)
     $total_currencies_used = 0;
     $other_then_base       = false;
     $base_found            = false;
-    foreach ($currencies as $currency) {
+    if($table == db_prefix() . 'proposals'){
+        $CI->db->where('branch_id', get_current_branch());
+    }
+    else{
+        $CI->load->model('Clients_model');
+        $client_array = $CI->Clients_model->clients_in_branch();
+        if(sizeof($client_array)>0){
+            $CI->db->where_in('clientid', $client_array); 
+        }
+       
+    }         
+    
+    foreach ($currencies as $currency) {           
         $CI->db->where('currency', $currency['id']);
         $total = $CI->db->count_all_results($table);
         if ($total > 0) {

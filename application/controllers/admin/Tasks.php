@@ -442,11 +442,11 @@ class Tasks extends AdminController
             echo 'Task not found';
             die();
         }
-
+        $bid = get_current_branch();
         $data['checklistTemplates'] = $this->tasks_model->get_checklist_templates();
         $data['task']               = $task;
         $data['id']                 = $task->id;
-        $data['staff']              = $this->staff_model->get('', ['active' => 1]);
+        $data['staff']              = $this->staff_model->get('', ['active' => 1,'branch_id'=>$bid]);
         $data['reminders']          = $this->tasks_model->get_reminders($taskid);
 
         $data['task_staff_members'] = $this->tasks_model->get_staff_members_that_can_access_task($taskid);
