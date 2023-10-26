@@ -1716,4 +1716,16 @@ class Clients_model extends App_Model
 
         return $this->db->get(db_prefix() . 'contacts')->result_array();
     }
+
+    public function clients_in_branch(){
+        $this->db->select('userid');
+        $this->db->where('branch_id', get_current_branch());
+        $result = $this->db->get(db_prefix() . 'clients')->result_array();
+        $clients=array();
+        foreach($result as $c){
+            array_push($clients,$c['userid']);
+        }
+        return $clients;
+
+    }
 }

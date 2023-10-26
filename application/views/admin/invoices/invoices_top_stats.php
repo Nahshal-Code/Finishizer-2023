@@ -3,7 +3,7 @@
     <div id="invoices_total"></div>
 
     <?php
-      $where_all           = '';
+      $where_all           = 'clientid IN (select userid from '.db_prefix() . 'clients where branch_id='.get_current_branch().') AND ';
       $has_permission_view = has_permission('invoices', '', 'view');
       if (isset($project)) {
           $where_all .= 'project_id=' . $project->id . ' AND ';
@@ -24,14 +24,20 @@
           if ($status == Invoices_model::STATUS_CANCELLED) {
               continue;
           }
-
-          $where = ['status' => $status];
-          if (isset($project)) {
-              $where['project_id'] = $project->id;
-          }
-          if (!$has_permission_view) {
-              $where['addedfrom'] = get_staff_user_id();
-          }
+          $where           = 'clientid IN (select userid from '.db_prefix() . 'clients where branch_id = '.get_current_branch().') AND status = '.$status.' AND ';
+          //$where = ['status' => $status];
+           if (isset($project)) {
+            $where .= 'project_id=' . $project->id . ' AND ';
+            //$where['project_id'] = $project->id;
+           }
+           if (!$has_permission_view) {
+            $where .= 'addedfrom=' . get_staff_user_id() . ' AND ';
+            //$where['addedfrom'] = get_staff_user_id();
+           }
+           $where = trim($where);
+           if (endsWith($where, ' AND')) {
+          $where = substr_replace($where, '', -4);
+      }
           $total_by_status = total_rows(db_prefix() . 'invoices', $where);
           $percent         = ($total_invoices > 0 ? number_format(($total_by_status * 100) / $total_invoices, 2) : 0); ?>
 

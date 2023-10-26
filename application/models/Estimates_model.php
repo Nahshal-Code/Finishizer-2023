@@ -418,6 +418,9 @@ class Estimates_model extends App_Model
         if (isset($data['customer_id']) && $data['customer_id'] != '') {
             $where = ' AND clientid=' . $data['customer_id'];
         }
+        else{
+            $where = ' AND clientid IN (SELECT userid FROM ' . db_prefix() . 'clients WHERE branch_id=' . get_current_branch() . ') ';
+        }
 
         if (isset($data['project_id']) && $data['project_id'] != '') {
             $where .= ' AND project_id=' . $data['project_id'];

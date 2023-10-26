@@ -141,8 +141,8 @@
                         _l('proposal_date_created'),
                         _l('proposal_status'),
                     ]);
-
-                    $custom_fields = get_custom_fields('proposal', ['show_on_table' => 1]);
+                    $bid = get_current_branch();
+                    $custom_fields = get_custom_fields('proposal', ['show_on_table' => 1,'branch_id'=>$bid]);
                     foreach ($custom_fields as $field) {
                         array_push($table_data, [
                          'name'     => $field['name'],

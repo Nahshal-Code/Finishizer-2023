@@ -532,9 +532,12 @@ class Reports_model extends App_Model
      */
     public function total_income_report()
     {
+        $this->load->model('Clients_model');
         $year = $this->input->post('year');
+        $client_array = $this->Clients_model->clients_in_branch();
         $this->db->select('amount,' . db_prefix() . 'invoicepaymentrecords.date');
         $this->db->from(db_prefix() . 'invoicepaymentrecords');
+        $this->db->where_in(db_prefix() . 'invoices.clientid', $client_array);
         $this->db->where('YEAR(' . db_prefix() . 'invoicepaymentrecords.date)', $year);
         $this->db->join(db_prefix() . 'invoices', '' . db_prefix() . 'invoices.id = ' . db_prefix() . 'invoicepaymentrecords.invoiceid');
         $by_currency = $this->input->post('report_currency');

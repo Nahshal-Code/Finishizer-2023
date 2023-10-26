@@ -24,7 +24,10 @@ if (!$project_id) {
 $sIndexColumn = 'id';
 $sTable       = db_prefix() . 'proposals';
 
-$where  = [];
+$bid = get_current_branch();
+    $where = [
+        'AND branch_id=' . $bid ,
+        ];
 $filter = [];
 
 if ($this->ci->input->post('leads_related')) {

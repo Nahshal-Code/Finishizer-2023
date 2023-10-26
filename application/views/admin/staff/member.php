@@ -572,10 +572,6 @@
     <?php init_tail(); ?>
     <script>
     $(function() {
-<<<<<<< HEAD
-=======
-
->>>>>>> d75928440868c4104f8e45bd59b0c7cbaa36ef32
         $('select[name="role"]').on('change', function() {
             var roleid = $(this).val();
             init_roles_permissions(roleid, true);

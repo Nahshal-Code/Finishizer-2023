@@ -29,7 +29,7 @@ $table_data = [
  _l('tags'),
  _l('proposal_date_created'),
  _l('proposal_status'), ];
-$custom_fields = get_custom_fields('proposal', ['show_on_table' => 1]);
+$custom_fields = get_custom_fields('proposal', ['branch_id' => get_current_branch(),'show_on_table' => 1]);
 foreach ($custom_fields as $field) {
     array_push($table_data, [
        'name'     => $field['name'],

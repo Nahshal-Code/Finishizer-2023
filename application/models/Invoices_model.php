@@ -241,7 +241,8 @@ class Invoices_model extends App_Model
         $has_permission_view_own            = has_permission('invoices', '', 'view_own');
         $allow_staff_view_invoices_assigned = get_option('allow_staff_view_invoices_assigned');
         $noPermissionsQuery                 = get_invoices_where_sql_for_staff(get_staff_user_id());
-
+        $this->load->model('Clients_model');
+        $client_array = $this->Clients_model->clients_in_branch();
         for ($i = 1; $i <= 3; $i++) {
             $select = 'id,total';
             if ($i == 1) {
@@ -251,6 +252,10 @@ class Invoices_model extends App_Model
             }
             $this->db->select($select);
             $this->db->from(db_prefix() . 'invoices');
+            if(sizeof($client_array)>0){
+                $this->db->where_in('clientid', $client_array);  
+            }
+            
             $this->db->where('currency', $currencyid);
             // Exclude cancelled invoices
             $this->db->where('status !=', self::STATUS_CANCELLED);
@@ -1866,6 +1871,14 @@ class Invoices_model extends App_Model
         $this->db->update(db_prefix() . 'options');
     }
 
+    /**
+     * Get the clients for current branch
+     *
+     * @param  int $bid
+     *
+     * @return array
+     */
+    
     /**
      * Get the contacts that should receive invoice related emails
      *

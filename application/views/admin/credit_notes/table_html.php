@@ -17,7 +17,7 @@ $table_data = array(
  _l('credit_note_remaining_credits'),
 );
 
-$custom_fields = get_custom_fields('credit_note',array('show_on_table'=>1));
+$custom_fields = get_custom_fields('credit_note',array('show_on_table'=>1,'branch_id' => get_current_branch()));
 foreach($custom_fields as $field){
   array_push($table_data, [
    'name' => $field['name'],
