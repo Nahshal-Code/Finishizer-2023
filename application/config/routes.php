@@ -59,7 +59,8 @@ $route['translate_uri_dashes'] = false;
  * Dashboard clean route
  */
 
-    $route['admin'] = 'admin/dashboard';
+    //$route['admin'] = 'admin/dashboard';
+    $route['admin'] = 'admin/Branches';
     $route['admin/dashboard/(:num)'] = 'admin/dashboard/index/$1';
     $route['branches'] = 'admin/Branches';
     
