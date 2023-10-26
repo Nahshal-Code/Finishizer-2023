@@ -253,7 +253,13 @@
                                 <div
                                     class="md:tw-border-r md:tw-border-solid md:tw-border-neutral-300 tw-flex-1 tw-flex tw-items-center">
                                     <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg">
-                                        <?php echo total_rows(db_prefix() . 'contacts', 'active = 1 AND userid IN (' . implode(',', $br_clients) . ')'); ?>
+                                        
+                                        <?php 
+                                        $contacts_where='active = 1';
+                                        if(sizeof($br_clients)>0){
+                                            $contacts_where.=' AND userid IN (' . implode(',', $br_clients) . ')';
+                                        }
+                                        echo total_rows(db_prefix() . 'contacts',$contacts_where ); ?>
                                     </span>
                                     <span
                                         class="text-info tw-truncate sm:tw-text-clip"><?php echo _l('customers_summary_active'); ?></span>
