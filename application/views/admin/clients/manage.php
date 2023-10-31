@@ -208,7 +208,7 @@
 
                         <?php if (has_permission('customers', '', 'view') || have_assigned_customers()) {
                       $where_summary = '';
-                      $contact_summary='';
+                      $contact_where='';
                       if (!has_permission('customers', '', 'view')) {
                           $where_summary = ' AND userid IN (SELECT customer_id FROM ' . db_prefix() . 'customer_admins WHERE staff_id=' . get_staff_user_id() . ')';
                          
@@ -255,7 +255,7 @@
                                     <span class="tw-font-semibold tw-mr-3 rtl:tw-ml-3 tw-text-lg">
                                         
                                         <?php
-                                        $contact_where='';
+                                        
                                         if(sizeof($br_clients)>0){
                                             $contact_where=' AND userid IN (' . implode(',', $br_clients) . ')';
                                         }
