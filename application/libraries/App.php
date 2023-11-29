@@ -265,12 +265,19 @@ class App
     {
         $val  = '';
         $name = trim($name);
+        $bid = get_current_branch();
 
         if (!isset($this->options[$name])) {
             // is not auto loaded
-            $this->ci->db->select('value');
-            $this->ci->db->where('name', $name);
-            $row = $this->ci->db->get(db_prefix() . 'options')->row();
+                // $this->ci->db->select('value');  
+                // $this->ci->db->where('name', $name);
+                // $row = $this->ci->db->get(db_prefix() . 'options')->row();
+                //$row = $this->ci->db->query('SELECT '.db_prefix() .'branch_options.value FROM '.db_prefix() .'branch_options LEFT JOIN '.db_prefix() .'options ON '.db_prefix() .'branch_options.option_id = '.db_prefix() .'options.id WHERE '.db_prefix() .'options.name='.$name)->row();
+                $op_id = $this->ci->db->select('id')->where('name', $name)->get(db_prefix() . 'options')->row();
+                $row = $this->ci->db->select('value')->where('option_id', $op_id->id)->get(db_prefix() . 'branch_options')->row();
+            
+            
+            
             if ($row) {
                 $val = $row->value;
             }
@@ -381,18 +388,25 @@ class App
      */
     protected function init()
     {
-        // Temporary checking for v1.8.0
-        if ($this->ci->db->field_exists('autoload', db_prefix() . 'options')) {
-            $options = $this->ci->db->select('name, value')
-            ->where('autoload', 1)
-            ->get(db_prefix() . 'options')->result_array();
-        } else {
-            $options = $this->ci->db->select('name, value')
-            ->get(db_prefix() . 'options')->result_array();
+        $bid = get_current_branch();
+        if($bid){
+            $options = $this->ci->db->query('SELECT name,'.db_prefix() .'branch_options.value FROM '.db_prefix() .'branch_options LEFT JOIN '.db_prefix() .'options ON '.db_prefix() .'branch_options.option_id = '.db_prefix() .'options.id WHERE '.db_prefix() .'branch_options.branch_id='.$bid)->result_array();
+        }
+        else{
+            //Temporary checking for v1.8.0
+            if ($this->ci->db->field_exists('autoload', db_prefix() . 'options')) {
+                $options = $this->ci->db->select('name, value')
+                ->where('autoload', 1)
+                ->get(db_prefix() . 'options')->result_array();
+            } else {
+                $options = $this->ci->db->select('name, value')
+                ->get(db_prefix() . 'options')->result_array();
+            }
         }
 
         // Loop the options and store them in a array to prevent fetching again and again from database
         foreach ($options as $option) {
+            
             $this->options[$option['name']] = $option['value'];
         }
 

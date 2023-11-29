@@ -23,9 +23,12 @@
                            <tr>
                            <td><?php echo $item->branch_id; ?></td>
                            <td><?php echo $item->branch_name; ?></td>
-                            <td><a href=<?php echo admin_url('branches/branch_home/'.$item->branch_id); ?>
-                                class="btn btn-primary">
-                                Go</a></td>
+                            <td><a href=<?php echo admin_url('dashboard/index/'.$item->branch_id); ?>
+                                class="btn btn-primary"> View Dashboard</a></td>
+                            <td><a   onclick="edit_branch(<?php echo $item->branch_id ?>);"
+                                class="btn btn-primary">Edit</a></td>
+                            <td><a   onclick="delete_branch(<?php echo $item->branch_id ?>);"
+                                class="btn btn-primary">Delete</a></td>
                             </tr>
                            <?php
                         }
@@ -39,10 +42,28 @@
         </div>
 </div>
 </div>
+
+
       
 
 <?php init_tail(); ?>
 <script>
+
+
+function edit_branch(id) {
+    var isdelete = confirm('r u sure');
+    if(isdelete){
+        window.location =admin_url + 'branches/edit/'+id;
+    }
+}
+function delete_branch(id) {
+    var isdelete = confirm('r u sure');
+    if(isdelete){
+        window.location =admin_url + 'branches/delete/'+id;
+    }
+}
+    
+   
 </script>
 </body>
 

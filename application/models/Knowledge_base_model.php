@@ -383,4 +383,12 @@ class Knowledge_base_model extends App_Model
             'success' => false,
         ];
     }
+
+    public function get_group_articles($grp_id){
+
+        $this->db->where('articlegroup',$grp_id);
+        return $this->db->get(db_prefix().'knowledge_base')->result_array();
+       // return $this->db->get(db_prefix().'knowledge_base')->result_array();
+    }
+   
 }

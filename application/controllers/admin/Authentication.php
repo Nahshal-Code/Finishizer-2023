@@ -31,12 +31,9 @@ class Authentication extends App_Controller
     public function admin()
     {
         if (is_staff_logged_in()) {
-            if(is_admin()){
-                redirect('branches');
-            }
-            else{
+            
                 redirect(admin_url());
-            }
+            
         }
 
         $this->form_validation->set_rules('password', _l('admin_auth_login_password'), 'required');
@@ -88,12 +85,9 @@ class Authentication extends App_Controller
 
                 hooks()->do_action('after_staff_login');
                 
-                if(1){
-                    redirect('admin/branches');
-                }
-                else{
-                    redirect(admin_url());
-                }
+               
+                redirect(admin_url());
+                
                 
                 
             }

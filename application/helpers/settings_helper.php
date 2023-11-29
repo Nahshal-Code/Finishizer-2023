@@ -17,24 +17,49 @@ function add_option($name, $value = '', $autoload = 1)
     if (!option_exists($name)) {
         $CI = & get_instance();
 
+        $opt = $CI->db->select('id')->where('name', $name)->get(db_prefix() . 'options')->row();
+        if(!$opt){
+            $data = ['name' => $name];
+            $CI->db->insert(db_prefix() . 'options', $data);
+            $op_id = $CI->db->insert_id();
+
+        }
+        else{
+            $op_id = $opt->id;
+        }
+        
         $newData = [
-                'name'  => $name,
-                'value' => $value,
-            ];
+                    'branch_id' => get_current_branch(),
+                    'option_id'  => $op_id,
+                    'value' => $value,
+                    'autoload' => $autoload,
+                ];
 
-        if ($CI->db->field_exists('autoload', db_prefix() . 'options')) {
-            $newData['autoload'] = $autoload;
-        }
-
-        $CI->db->insert(db_prefix() . 'options', $newData);
-
+        $CI->db->insert(db_prefix() . 'branch_options', $newData);
         $insert_id = $CI->db->insert_id();
-
         if ($insert_id) {
-            return true;
+                return true;
         }
-
+    
         return false;
+        // $newData = [
+        //         'name'  => $name,
+        //         'value' => $value,
+        //     ];
+
+        // if ($CI->db->field_exists('autoload', db_prefix() . 'options')) {
+        //     $newData['autoload'] = $autoload;
+        // }
+
+        // $CI->db->insert(db_prefix() . 'options', $newData);
+
+        // $insert_id = $CI->db->insert_id();
+
+        // if ($insert_id) {
+        //     return true;
+        // }
+
+        // return false;
     }
 
     return false;
@@ -77,14 +102,25 @@ function update_option($name, $value, $autoload = null)
 
     $CI = & get_instance();
 
-    $CI->db->where('name', $name);
+    $op_id = $CI->db->select('id')->where('name', $name)->get(db_prefix() . 'options')->row();
+
+    $CI->db->where('option_id', $op_id->id);
+    $CI->db->where('branch_id', get_current_branch());
     $data = ['value' => $value];
 
     if ($autoload) {
         $data['autoload'] = $autoload;
     }
 
-    $CI->db->update(db_prefix() . 'options', $data);
+    $CI->db->update(db_prefix() . 'branch_options', $data);
+    // $CI->db->where('name', $name);
+    // $data = ['value' => $value];
+
+    // if ($autoload) {
+    //     $data['autoload'] = $autoload;
+    // }
+
+    // $CI->db->update(db_prefix() . 'options', $data);
 
     if ($CI->db->affected_rows() > 0) {
         return true;
@@ -102,11 +138,27 @@ function update_option($name, $value, $autoload = null)
 function delete_option($name)
 {
     $CI = &get_instance();
-    $CI->db->where('name', $name);
-    $CI->db->delete(db_prefix() . 'options');
+    $op_id = $CI->db->select('id')->where('name', $name)->get(db_prefix() . 'options')->row();
 
-    return (bool) $CI->db->affected_rows();
-}
+    $num = total_rows(db_prefix() . 'branch_options', ['option_id' => $op_id->id,]);
+    
+    if( $num == 1)
+    {
+        $CI->db->where('name', $name);
+        $CI->db->delete(db_prefix() . 'options');
+    }
+        $CI->db->where('option_id', $op_id->id);
+        $CI->db->where('branch_id', get_current_branch());
+        $CI->db->delete(db_prefix() . 'branch_options');
+        return (bool) $CI->db->affected_rows();
+    
+    
+//     $CI = &get_instance();
+//     $CI->db->where('name', $name);
+//     $CI->db->delete(db_prefix() . 'options');
+
+//     return (bool) $CI->db->affected_rows();
+ }
 
 /**
  * @since  2.3.3
@@ -118,9 +170,28 @@ function delete_option($name)
  */
 function option_exists($name)
 {
-    return total_rows(db_prefix() . 'options', [
-        'name' => $name,
-    ]) > 0;
+    // return total_rows(db_prefix() . 'options', [
+    //     'name' => $name,
+    // ]) > 0;
+    $bid = get_current_branch();
+    if(!$bid){
+        return total_rows(db_prefix() . 'options', [
+                'name' => $name,
+            ]) > 0;
+    }
+    else{
+        $CI = &get_instance();
+        $op_id = $CI->db->select('id')->where('name', $name)->get(db_prefix() . 'options')->row();
+        if($op_id){
+        return total_rows(db_prefix() . 'branch_options', [
+            'branch_id' => get_current_branch(),'option_id' => $op_id->id,
+             ]) > 0;
+    }
+    }
+    
+        
+    return false;
+    
 }
 
 function app_init_settings_tabs()

@@ -10,14 +10,28 @@ class Dashboard extends AdminController
     {
         parent::__construct();
         $this->load->model('dashboard_model');
+       
     }
+    
 
     /* This is admin dashboard view */
     public function index($id='')
     {
+        if(!$id){
+            $id = get_current_branch();
+        }
+        $this->load->model('Branches_model');
+        $branch = $this->Branches_model->getBranches($id);
+        if(!$branch){
+            show_404();
+        }
+        else{
+
         $this->load->library('session');
         $this->session->set_userdata('selectedbranch_id',$id);
         close_setup_menu();
+        $this->load->library('app');
+    
         $this->load->model('departments_model');
         $this->load->model('todo_model');
         $data['departments'] = $this->departments_model->get();
@@ -86,10 +100,13 @@ class Dashboard extends AdminController
         if (is_admin()) {
             $data['tickets_report'] = (new \app\services\TicketsReportByStaff())->filterBy('this_month');
         }
-
+        
         $data = hooks()->apply_filters('before_dashboard_render', $data);
         $this->load->view('admin/dashboard/dashboard', $data);
+        }
+        
     }
+
 
     /* Chart weekly payments statistics on home page / ajax */
     public function weekly_payments_statistics($currency)

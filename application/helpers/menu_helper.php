@@ -5,11 +5,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 function app_init_admin_sidebar_menu_items()
 {
     $CI = &get_instance();
-
+    
     $CI->app_menu->add_sidebar_menu_item('dashboard', [
         'name'     => _l('als_dashboard'),
-        'href'     => admin_url(),
-        'position' => 1,
+        'href'     => admin_url('dashboard/index'),
+        'position' => 2,
         'icon'     => 'fa fa-home',
         'badge'    => [],
     ]);
@@ -254,7 +254,7 @@ function app_init_admin_sidebar_menu_items()
             'name'     => _l('branches'),
             'href'     => admin_url('branches'),
             'icon'     => 'fa-solid fa-chart-gantt',
-            'position' => 2,
+            'position' => 1,
             'badge'    => [],
         ]);
     }

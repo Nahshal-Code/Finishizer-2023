@@ -51,7 +51,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 |       my-controller/my-method -> my_controller/my_method
 */
 
-$route['default_controller']   = 'clients';
+$route['default_controller']   = 'Authentication/admin';
+//$route['default_controller']   ='clients';
 $route['404_override']         = '';
 $route['translate_uri_dashes'] = false;
 
@@ -61,7 +62,7 @@ $route['translate_uri_dashes'] = false;
 
     //$route['admin'] = 'admin/dashboard';
     $route['admin'] = 'admin/Branches';
-    $route['admin/dashboard/(:num)'] = 'admin/dashboard/index/$1';
+    //$route['admin/dashboard/(:num)'] = 'admin/dashboard/index/$1';
     $route['branches'] = 'admin/Branches';
     
 
@@ -88,7 +89,8 @@ $route['admin/items/search'] = 'admin/invoice_items/search';
 /**
  * In case if client access directly to url without the arguments redirect to clients url
  */
-$route['/'] = 'clients';
+ $route['/'] = 'clients';
+
 
 /**
  * @deprecated

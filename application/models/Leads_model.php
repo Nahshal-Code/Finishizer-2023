@@ -1044,6 +1044,17 @@ class Leads_model extends App_Model
         return false;
     }
 
+    /**
+     * Delete email integration details of a branch
+     */
+    public function delete_email_integration($id){
+
+        $this->db->where('branch_id',$id);
+        $this->db->delete(db_prefix() . 'leads_email_integration');
+
+    }
+
+
     public function change_status_color($data)
     {
         $this->db->where('id', $data['status_id']);

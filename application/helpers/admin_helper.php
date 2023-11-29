@@ -41,13 +41,9 @@ function init_head($aside = true)
 }
 function init_superadminhead()
 {
-
     $CI = &get_instance();
     $CI->load->view('admin/includes/head');
     $CI->load->view('admin/includes/superadmin_header', ['startedTimers' => $CI->misc_model->get_staff_started_timers()]);
-    
-    
-    
 }
 
 

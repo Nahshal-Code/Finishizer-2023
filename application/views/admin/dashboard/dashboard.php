@@ -1,5 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php init_head(); ?>
+<?php
+ init_head($aside = true);
+?>
 <div id="wrapper">
     <div class="screen-options-area"></div>
     <div class="screen-options-btn">
@@ -14,7 +16,7 @@
     </div>
     <div class="content">
         <div class="row">
-            <?php echo $this->session->userdata('selectedbranch_id'); ?>
+           
             <?php $this->load->view('admin/includes/alerts'); ?>
 
             <?php hooks()->do_action('before_start_render_dashboard_content'); ?>
@@ -61,6 +63,7 @@
 </div>
 <script>
 app.calendarIDs = '<?php echo json_encode($google_ids_calendars); ?>';
+
 </script>
 <?php init_tail(); ?>
 <?php $this->load->view('admin/utilities/calendar_template'); ?>
