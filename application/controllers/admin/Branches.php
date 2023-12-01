@@ -62,10 +62,12 @@ class Branches extends AdminController
          }
         $data = [];
         if($id != ''){
+            $this->session->set_userdata('selectedbranch_id',$id);
             $data['branch'] = $this->Branches_model->get($id);
             
         }
-        
+        $this->load->model('Currencies_model');
+        $data['currencies'] = $this->Currencies_model->get();
         $this->load->view('admin/branches/branch',$data);
     }
 

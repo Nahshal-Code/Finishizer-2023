@@ -176,8 +176,11 @@ class Currencies_model extends App_Model
      */
     public function get_base_currency()
     {
-        $this->db->where('isdefault', 1);
+        $this->db->select('currency_id');
+        $this->db->where('branch_id', get_current_branch());
 
+        $curr = $this->db->get(db_prefix() . 'branches')->result();
+        $this->db->where('id', $curr[0]->currency_id);
         return $this->db->get(db_prefix() . 'currencies')->row();
     }
 

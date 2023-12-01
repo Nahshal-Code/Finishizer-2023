@@ -18,14 +18,11 @@
                         <?php $value = (isset($branch) ? $branch[0]->branch_location : ''); ?> 
                         <?php echo render_input('branch_location', 'branch_location', $value, 'text');?>
                         </div>
+                        
                         <div class="form-group">
-                        <?php $value = (isset($branch) ? $branch[0]->language : ''); ?> 
-                        <?php echo render_input('language', 'language', $value, 'text');?>
-                            
-                        </div>
-                        <div class="form-group">
-                        <?php $value = (isset($branch) ? $branch[0]->currency : ''); ?> 
-                        <?php echo render_input('currency', 'currency', $value, 'text');?>
+                        <?php $selected = (isset($branch) ? $branch[0]->currency_id : ''); ?> 
+                        <?php echo render_select('currency_id', $currencies, ['id', 'name', 'symbol'], 'Currency', $selected); ?>
+                        <!-- <?php echo render_input('currency', 'currency', $value, 'text');?> -->
                             
                         </div>      
                     <div class="panel-footer text-right">
