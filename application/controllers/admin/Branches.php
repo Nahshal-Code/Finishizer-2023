@@ -13,6 +13,8 @@ class Branches extends AdminController
     }
     public function index()
     {
+        $this->load->library('session');
+        $this->session->set_userdata('selectedbranch_id',0);
         $data['branches'] = $this->Branches_model->get();
         $data['title'] = 'Branches';
         $this->load->view('admin/branches/manage',$data);
