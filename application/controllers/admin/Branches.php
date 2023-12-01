@@ -37,7 +37,7 @@ class Branches extends AdminController
                     $this->Leads_model->add_email_integration($id);
                     $this->Branches_model->add_new_branch_options($id);
                     set_alert('success', _l('added_successfully', _l('branch')));
-                    redirect(admin_url('branches/branch/' . $id));
+                    redirect(admin_url('branches'));
                     
                 }
                 set_alert('danger', _l('error'));
@@ -54,7 +54,7 @@ class Branches extends AdminController
             $success = $this->Branches_model->update($id,$this->input->post());
             if ($success) {
                 set_alert('success', _l('updated_successfully', _l('Branch')));
-                redirect(admin_url('branches/branch/' . $id));
+                redirect(admin_url('branches'));
             }
             
          }
