@@ -27,21 +27,26 @@ function add_option($name, $value = '', $autoload = 1)
         else{
             $op_id = $opt->id;
         }
-        
-        $newData = [
-                    'branch_id' => get_current_branch(),
-                    'option_id'  => $op_id,
-                    'value' => $value,
-                    'autoload' => $autoload,
-                ];
+        $bid = get_current_branch();
+        if($bid != 0){
+            $newData = [
+                'branch_id' => get_current_branch(),
+                'option_id'  => $op_id,
+                'value' => $value,
+                'autoload' => $autoload,
+            ];
 
-        $CI->db->insert(db_prefix() . 'branch_options', $newData);
-        $insert_id = $CI->db->insert_id();
-        if ($insert_id) {
-                return true;
+            $CI->db->insert(db_prefix() . 'branch_options', $newData);
+            $insert_id = $CI->db->insert_id();
+            if ($insert_id) {
+                    return true;
+            }
+        }
+        else{
+            return true;
         }
     
-        return false;
+        
         // $newData = [
         //         'name'  => $name,
         //         'value' => $value,
