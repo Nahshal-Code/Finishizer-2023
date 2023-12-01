@@ -3,26 +3,37 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Branches_model extends App_Model
 {
+    
+
+    public function get($id='')
+    {
+        if($id){
+            $this->db->where('branch_id',$id);
+        }
+        $result = $this->db->get('tblbranches')->result();
+        
+        return $result;
+    }
+
     public function add($data){
         $this->db->insert(db_prefix() . 'branches', $data);
         $id = $this->db->insert_id();
         return $id;
     }
 
-    public function getBranches($id='')
-    {
-        if($id){
-            $this->db->where('branch_id',$id);
-        }
-        $query = $this->db->get('tblbranches');
-        $result = $query->result();
+    public function update($id,$data){
+        $this->db->where('branch_id ', $id);
+        $this->db->update(db_prefix() . 'branches', $data);
 
-        
-        return $result;
+        if ($this->db->affected_rows() > 0) {
+            return true;
+        }
+        return false;
     }
 
     public function delete($id){
        
+        
         $this->db->where('branch_id', $id);
         $this->db->delete(db_prefix() . 'branch_options');
 

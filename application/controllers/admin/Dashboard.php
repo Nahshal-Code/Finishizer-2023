@@ -21,7 +21,7 @@ class Dashboard extends AdminController
             $id = get_current_branch();
         }
         $this->load->model('Branches_model');
-        $branch = $this->Branches_model->getBranches($id);
+        $branch = $this->Branches_model->get($id);
         if(!$branch){
             show_404();
         }

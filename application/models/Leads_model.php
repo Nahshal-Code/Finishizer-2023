@@ -1049,7 +1049,7 @@ class Leads_model extends App_Model
      */
     public function delete_email_integration($id){
 
-        $this->db->where('branch_id',$id);
+        $this->db->where('id',$id);
         $this->db->delete(db_prefix() . 'leads_email_integration');
 
     }

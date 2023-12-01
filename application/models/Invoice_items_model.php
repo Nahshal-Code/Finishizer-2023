@@ -75,7 +75,7 @@ class Invoice_items_model extends App_Model
      * @param  mixed $id
      * @return mixed - array if not passed id, object if id passed
      */
-    public function get($id = '')
+    public function get($id = '',$where = [])
     {
         $columns             = $this->db->list_fields(db_prefix() . 'items');
         $rateCurrencyColumns = '';
@@ -93,6 +93,9 @@ class Invoice_items_model extends App_Model
         $this->db->join('' . db_prefix() . 'taxes t2', 't2.id = ' . db_prefix() . 'items.tax2', 'left');
         $this->db->join(db_prefix() . 'items_groups', '' . db_prefix() . 'items_groups.id = ' . db_prefix() . 'items.group_id', 'left');
         $this->db->order_by('description', 'asc');
+        if($where){
+            $this->db->where($where);
+        }
         if (is_numeric($id)) {
             $this->db->where(db_prefix() . 'items.id', $id);
 
@@ -348,5 +351,10 @@ class Invoice_items_model extends App_Model
         }
 
         return false;
+    }
+
+    public function delete_item_taxes($id){
+        $$this->db->where('item', $id);
+        $this->db->delete(db_prefix() . 'item_tax');
     }
 }
