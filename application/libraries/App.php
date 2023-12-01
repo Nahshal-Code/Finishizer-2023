@@ -272,16 +272,21 @@ class App
                 // $this->ci->db->select('value');  
                 // $this->ci->db->where('name', $name);
                 // $row = $this->ci->db->get(db_prefix() . 'options')->row();
-                //$row = $this->ci->db->query('SELECT '.db_prefix() .'branch_options.value FROM '.db_prefix() .'branch_options LEFT JOIN '.db_prefix() .'options ON '.db_prefix() .'branch_options.option_id = '.db_prefix() .'options.id WHERE '.db_prefix() .'options.name='.$name)->row();
+            if(!$bid){
+                $this->ci->db->select('value');  
+                $this->ci->db->where('name', $name);
+                $row = $this->ci->db->get(db_prefix() . 'options')->row();
+
+            }
+            else{
                 $op_id = $this->ci->db->select('id')->where('name', $name)->get(db_prefix() . 'options')->row();
                 $row = $this->ci->db->select('value')->where('option_id', $op_id->id)->get(db_prefix() . 'branch_options')->row();
-            
-            
-            
+            }
+       
             if ($row) {
                 $val = $row->value;
             }
-        } else {
+        }  else {
             $val = $this->options[$name];
         }
 
